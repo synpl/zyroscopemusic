@@ -10,9 +10,19 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 )
 async def start_(client: Client, message: Message):
     await message.reply_text(
-        f"""<b>┗┓ Haii {message.from_user.first_name} My Name is TD Music Bot ┏┛\n Saya Bot Music Group, Yang dapat Memutar Lagu di Voice Chat Group Dengan cara yang Mudah Saya Memiliki Banyak Fitur Praktis Seperti : ┏━━━━━━━━━━━━━━ ┣• Memutar Musik. ┣• Mendownload Lagu. ┣• Mencari Lagu Yang ingin di Putar atau di Download. ┗━━━━━━━━━━━━━━ ❃ Managed With ☕️ By : [Tofik Denianto](https://t.me/tofik_dn) ━━━━━━━━━━━━━━━ Ingin Menambahkan Saya ke Group Anda? Tambahkan Saya Ke Group Anda! </b>""",
-      
-       
+        f"""<b>┗┓ Haii {message.from_user.first_name} My Name is TD Music Bot ┏┛\n
+Saya Bot Music Group, Yang dapat Memutar Lagu di Voice Chat Group Dengan cara yang Mudah
+Saya Memiliki Banyak Fitur Praktis Seperti :
+┏━━━━━━━━━━━━━━
+┣• Memutar Musik.
+┣• Mendownload Lagu.
+┣• Mencari Lagu Yang ingin di Putar atau di Download.
+┗━━━━━━━━━━━━━━
+❃ Managed With ☕️ By : [Tofik Denianto](https://t.me/tofik_dn)
+━━━━━━━━━━━━━━━
+Ingin Menambahkan Saya ke Group Anda? Tambahkan Saya Ke Group Anda!
+</b>""",
+
         reply_markup=InlineKeyboardMarkup(
             [ 
                 [
