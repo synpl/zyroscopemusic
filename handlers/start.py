@@ -9,41 +9,26 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
     & ~ filters.edited
 )
 async def start_(client: Client, message: Message):
-    await message.reply_sticker("CAACAgUAAxkBAAIp9mBtwBBZGywWEmV-WC8gcMArjusuAAKMAgACTp1xV6m-mtC1YTfoHgQ")
     await message.reply_text(
-        f"""<b>Hi {message.from_user.first_name}!
-\nI can play music in your group's voice chat
-Maintained by @HEROGAMERS1 ❤
-\nTo add in your group contact us at @AwesomeSupport.
-\nHit /help list of available commands.
- </b>""",
+        f"""<b>┗┓ Haii {message.from_user.first_name} My Name is TD Music Bot ┏┛\n Saya Bot Music Group, Yang dapat Memutar Lagu di Voice Chat Group Dengan cara yang Mudah Saya Memiliki Banyak Fitur Praktis Seperti : ┏━━━━━━━━━━━━━━ ┣• Memutar Musik. ┣• Mendownload Lagu. ┣• Mencari Lagu Yang ingin di Putar atau di Download. ┗━━━━━━━━━━━━━━ ❃ Managed With ☕️ By : [Tofik Denianto](https://t.me/tofik_dn) ━━━━━━━━━━━━━━━ Ingin Menambahkan Saya ke Group Anda? Tambahkan Saya Ke Group Anda! </b>""",
       
        
         reply_markup=InlineKeyboardMarkup(
-            [
+            [ 
                 [
                     InlineKeyboardButton(
-                        "🌍 Music World", url="https://t.me/GIRLS_AND_BOYS_CHATTING",
-                    )
-                ],
-                [
+                        "➕ Tambahkan Ke Group ➕", url="https://t.me/tofikdnbot?startgroup=true")
+                  ],[
                     InlineKeyboardButton(
-                        "💬 Group", url="https://t.me/AwesomeSupport"
+                         "📷 Instagram", url="https://www.instagram.com/tofik_dn"
                     ),
                     InlineKeyboardButton(
-                        "🔊 Channel", url="https://t.me/LaylaList"
-                    ),
-                    InlineKeyboardButton(
-                        "💾 Source code", url="https://github.com/QueenArzoo/VCPlayBot"
+                        "💾 Project Man", url="https://t.me/Lunatic0de"
                     )
-                ],
-                [
-                    InlineKeyboardButton(
-                        "➕ Add To Your Group ➕", url="https://t.me/VCPlayBot?startgroup=true"
-                    ) 
                 ]
             ]
-        )
+        ),
+     disable_web_page_preview=False
     )
 
 @Client.on_message(
@@ -53,23 +38,15 @@ Maintained by @HEROGAMERS1 ❤
 )
 async def start(client: Client, message: Message):
     await message.reply_text(
-        "💁🏻‍♂️ Do you want to search for a YouTube video?",
+        "💁🏻‍♂️ **Apakah Anda ingin mencari Link YouTube?**",
         reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(
-                        "🔊 Channel", url="https://t.me/LaylaList"
-                    ),
-                    InlineKeyboardButton(
-                        "💬 Group", url="https://t.me/AwesomeSupport"
-                    )
-                ],    
+            [   
                 [    
                     InlineKeyboardButton(
-                        "✅ Yes", switch_inline_query_current_chat=""
+                        "✅ Ya", switch_inline_query_current_chat=""
                     ),
                     InlineKeyboardButton(
-                        "No ❌", callback_data="close"
+                        "❌ Tidak ", callback_data="close"
                     )
                 ]
             ]
@@ -107,12 +84,12 @@ async def help(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        "🔊 Channel", url="https://t.me/LaylaList"
+                        "Owner", url="https://t.me/tofik_dn"
                     ),
                     InlineKeyboardButton(
-                        "💬 Group", url="https://t.me/AwesomeSupport"
+                        "Project Man", url="https://t.me/Lunatic0de"
                     )
                 ]
             ]
         )
-    )    
+    )
