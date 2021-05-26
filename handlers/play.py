@@ -573,7 +573,7 @@ async def deezer(client: Client, message_: Message):
 
                           try:
                               await USER.join_chat(invitelink)
-                              await USER.send_message(message_.chat.id,"I joined this group for playing music in VC")
+                              await USER.send_message(message_.chat.id,"Saya bergabung dengan group ini untuk memainkan musik di VCG")
                               await lel.edit(
                                   "<b>Assistant Bot berhasil bergabung dengan Group anda</b>",
                               )
@@ -703,7 +703,7 @@ async def jiosaavn(client: Client, message_: Message):
 
                           try:
                               await USER.join_chat(invitelink)
-                              await USER.send_message(message_.chat.id,"I joined this group for playing music in VC")
+                              await USER.send_message(message_.chat.id,"Saya bergabung dengan group ini untuk memainkan musik di VCG")
                               await lel.edit(
                                   "<b>Assistant Bot berhasil bergabung dengan Group anda</b>",
                               )
