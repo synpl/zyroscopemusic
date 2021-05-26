@@ -20,7 +20,7 @@ Saya Memiliki Banyak Fitur Praktis Seperti :
 ┗━━━━━━━━━━━━━━
 ❃ Managed With ☕️ By : [Tofik Denianto](https://t.me/tofik_dn)
 ━━━━━━━━━━━━━━━
-Ingin Menambahkan Saya ke Group Anda? Tambahkan Saya Ke Group Anda!
+Ketik » /help « Untuk Melihat Daftar Perintah!
 </b>""",
 
         reply_markup=InlineKeyboardMarkup(
