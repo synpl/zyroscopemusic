@@ -25,51 +25,48 @@ async def update_admin(client, message):
     await message.reply_text('Sucessfully updated admin list in **{}**'.format(message.chat.title))
 
 
-
-
 @Client.on_message(command("pause") & other_filters)
 @errors
 @authorized_users_only
 async def pause(_, message: Message):
-    if (
-            message.chat.id not in callsmusic.pytgcalls.active_calls
-    ) or (
-            callsmusic.pytgcalls.active_calls[message.chat.id] == 'paused'
+    chat_id = get_chat_id(message.chat)
+    if (chat_id not in callsmusic.pytgcalls.active_calls) or (
+        callsmusic.pytgcalls.active_calls[chat_id] == "paused"
     ):
         await message.reply_text("❗ **Tidak ada Lagu yang sedang diputar!**")
     else:
-        callsmusic.pytgcalls.pause_stream(message.chat.id)
-        await message.reply_text("▶️ Paused!")
+        callsmusic.pytgcalls.pause_stream(chat_id)
+        await message.reply_text("▶️ **Paused!**")
 
 
 @Client.on_message(command("resume") & other_filters)
 @errors
 @authorized_users_only
 async def resume(_, message: Message):
-    if (
-            message.chat.id not in callsmusic.pytgcalls.active_calls
-    ) or (
-            callsmusic.pytgcalls.active_calls[message.chat.id] == 'playing'
+    chat_id = get_chat_id(message.chat)
+    if (chat_id not in callsmusic.pytgcalls.active_calls) or (
+        callsmusic.pytgcalls.active_calls[chat_id] == "playing"
     ):
         await message.reply_text("❗ **Tidak ada Lagu yang sedang dijeda!**")
     else:
-        callsmusic.pytgcalls.resume_stream(message.chat.id)
-        await message.reply_text("⏸ Resumed!")
+        callsmusic.pytgcalls.resume_stream(chat_id)
+        await message.reply_text("⏸ **Resumed!**")
 
 
 @Client.on_message(command("end") & other_filters)
 @errors
 @authorized_users_only
 async def stop(_, message: Message):
-    if message.chat.id not in callsmusic.pytgcalls.active_calls:
-        await message.reply_text("❗ **Tidak ada Lagu yang sedang diputar!")
+    chat_id = get_chat_id(message.chat)
+    if chat_id not in callsmusic.pytgcalls.active_calls:
+        await message.reply_text("❗ **Tidak ada Lagu yang sedang diputar!**")
     else:
         try:
-            callsmusic.queues.clear(message.chat.id)
+            callsmusic.queues.clear(chat_id)
         except QueueEmpty:
             pass
 
-        callsmusic.pytgcalls.leave_group_call(message.chat.id)
+        callsmusic.pytgcalls.leave_group_call(chat_id)
         await message.reply_text("❌ **Memberhentikan Lagu!**")
 
 
