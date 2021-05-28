@@ -97,7 +97,7 @@ async def skip(_, message: Message):
     await message.reply_text(f'- Skipped **{skip[0]}**\n- Now Playing **{qeue[0][0]}**')
 
 
-@Client.on_message(filters.command("admincache"))
+@Client.on_message(filters.command("reload"))
 @errors
 async def admincache(client, message: Message):
     set(
@@ -107,4 +107,4 @@ async def admincache(client, message: Message):
             for member in await message.chat.get_members(filter="administrators")
         ],
     )
-    await message.reply_text("✅️ **Daftar admin** telah **diperbarui**")
+    await message.reply_text("✅ Bot **berhasil dimulai ulang!**\n\n• **Daftar admin telah diperbarui.**")
