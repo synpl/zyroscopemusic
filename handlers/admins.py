@@ -75,26 +75,25 @@ async def stop(_, message: Message):
 @authorized_users_only
 async def skip(_, message: Message):
     global que
-    if message.chat.id not in callsmusic.pytgcalls.active_calls:
+    chat_id = get_chat_id(message.chat)
+    if chat_id not in callsmusic.pytgcalls.active_calls:
         await message.reply_text("❗ **Tidak ada Lagu Selanjutnya untuk dilewati!**")
     else:
-        callsmusic.queues.task_done(message.chat.id)
+        callsmusic.queues.task_done(chat_id)
 
-        if callsmusic.queues.is_empty(message.chat.id):
-            callsmusic.pytgcalls.leave_group_call(message.chat.id)
+        if callsmusic.queues.is_empty(chat_id):
+            callsmusic.pytgcalls.leave_group_call(chat_id)
         else:
             callsmusic.pytgcalls.change_stream(
-                message.chat.id,
-                callsmusic.queues.get(message.chat.id)["file"]
-            )
-                
+                chat_id, callsmusic.queues.get(chat_id)["file"]
+            )                
 
-    qeue = que.get(message.chat.id)
+    qeue = que.get(chat_id)
     if qeue:
         skip = qeue.pop(0)
     if not qeue:
         return
-    await message.reply_text(f'- Skipped **{skip[0]}**\n- Now Playing **{qeue[0][0]}**')
+    await message.reply_text(f'- Melewati lagu **{skip[0]}**\n- Sekarang memutar **{qeue[0][0]}**')
 
 
 @Client.on_message(filters.command("reload"))
