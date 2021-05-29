@@ -10,7 +10,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 )
 async def start_(client: Client, message: Message):
     await message.reply_text(
-        f"""<b>┗┓ Haii {message.from_user.first_name} My Name is TD Music Bot ┏┛\n
+        f"""<b>┗┓ Hi {message.from_user.first_name} My Name is TD Music Bot ┏┛\n
 Saya Bot Music Group, Yang dapat Memutar Lagu di Voice Chat Group Dengan cara yang Mudah
 Saya Memiliki Banyak Fitur Praktis Seperti :
 ┏━━━━━━━━━━━━━━
@@ -71,7 +71,7 @@ async def start(client: Client, message: Message):
 async def help(client: Client, message: Message):
     await message.reply_text(
         f"""<b>Hi {message.from_user.first_name}!
-\n/play <nama lagu>  - Untuk Memutar lagu yang Anda minta melalui youtube
+\n/play <nama lagu>  - Untuk Memutar lagu yang Anda minta melalui YouTube
 /dplay <nama lagu>  - Untuk Memutar lagu yang Anda minta melalui deezer
 /splay <nama lagu>  - Untuk Memutar lagu yang Anda minta melalui jio saavn
 /playlist - Untuk Menampilkan daftar putar Lagu sekarang
