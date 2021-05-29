@@ -181,7 +181,7 @@ def r_ply(type_):
                 
             ],
             [
-                InlineKeyboardButton('Playlist 📖', 'playlist'),
+                InlineKeyboardButton('📖 Playlist', 'playlist'),
                 
             ],
             [       
@@ -354,7 +354,7 @@ async def m_cb(b, cb):
                 
                 ],
                 [
-                    InlineKeyboardButton('Playlist 📖', 'playlist'),
+                    InlineKeyboardButton('📖 Playlist', 'playlist'),
                 
                 ],
                 [       
