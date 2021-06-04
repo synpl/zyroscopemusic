@@ -62,7 +62,7 @@ async def resume(_, message: Message):
 @authorized_users_only
 async def stop(_, message: Message):
     if message.chat.id not in callsmusic.pytgcalls.active_calls:
-        await message.reply_text("❗ **Tidak ada Lagu yang sedang diputar!")
+        await message.reply_text("❗ **Tidak ada Lagu yang sedang diputar!**")
     else:
         try:
             callsmusic.queues.clear(message.chat.id)
@@ -97,7 +97,7 @@ async def skip(_, message: Message):
         skip = qeue.pop(0)
     if not qeue:
         return
-    await message.reply_text(f'- Skipped **{skip[0]}**\n- Now Playing **{qeue[0][0]}**')
+    await message.reply_text(f'• Skipped **{skip[0]}**\n• Now Playing **{qeue[0][0]}**')
 
 
 @Client.on_message(filters.command("admincache"))
