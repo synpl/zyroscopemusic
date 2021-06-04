@@ -130,7 +130,7 @@ async def playlist(client, message):
     global que
     queue = que.get(message.chat.id)
     if not queue:
-        await message.reply_text('Player is idle')
+        await message.reply_text('Sedang tidak memutar lagu')
     temp = []
     for t in queue:
         temp.append(t)
@@ -332,7 +332,7 @@ async def m_cb(b, cb):
                 ) or (
                     callsmusic.pytgcalls.active_calls[chat_id] == 'paused'
                 ):
-            await cb.answer('Chat is not connected or already paused', show_alert=True)
+            await cb.answer('Obrolan tidak terhubung atau sudah di pause', show_alert=True)
         else:
             callsmusic.pytgcalls.pause_stream(chat_id)
             
