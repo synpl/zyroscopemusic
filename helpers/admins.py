@@ -21,7 +21,6 @@ from pyrogram.types import Chat, User
 
 import cache.admins
 
-
 async def get_administrators(chat: Chat) -> List[User]:
     get = cache.admins.get(chat.id)
 
