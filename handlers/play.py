@@ -382,7 +382,7 @@ async def m_cb(b, cb):
                 )
                 await cb.answer('Skipped')
                 await cb.message.edit((m_chat, qeue), reply_markup=r_ply(the_data))
-                await cb.message.reply_text(f'• Melewati lagu\n• Sekarang Memutar Lagu **{qeue[0][0]}**')
+                await cb.message.reply_text(f'• Skipped track\n• Now Playing **{qeue[0][0]}**')
 
     else:      
         if chat_id in callsmusic.pytgcalls.active_calls:
