@@ -185,7 +185,7 @@ def r_ply(type_):
                 
             ],
             [       
-                InlineKeyboardButton("🗑 Close",'cls')
+                InlineKeyboardButton("🗑 Tutup",'cls')
             ]        
         ]
     )
@@ -358,7 +358,7 @@ async def m_cb(b, cb):
                 
                 ],
                 [       
-                    InlineKeyboardButton("🗑 Close",'cls')
+                    InlineKeyboardButton("🗑 Tutup",'cls')
                 ]        
             ]
         )
@@ -496,7 +496,7 @@ async def play(_, message: Message):
                 ],
                 [       
                     InlineKeyboardButton(
-                        text="🗑 Close",
+                        text="🗑 Tutup",
                         callback_data='cls')
 
                 ]                             
