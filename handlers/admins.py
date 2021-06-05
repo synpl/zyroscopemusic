@@ -25,8 +25,6 @@ async def update_admin(client, message):
     await message.reply_text('Sucessfully updated admin list in **{}**'.format(message.chat.title))
 
 
-
-
 @Client.on_message(command("pause") & other_filters)
 @errors
 @authorized_users_only
