@@ -50,13 +50,13 @@ async def start(client: Client, message: Message):
     await message.reply_text(
         "💁🏻‍♂️ **Apakah Anda ingin mencari Link YouTube?**",
         reply_markup=InlineKeyboardMarkup(
-            [   
-                [    
+            [
+                [
                     InlineKeyboardButton(
                         "✅ Ya", switch_inline_query_current_chat=""
                     ),
                     InlineKeyboardButton(
-                        "❌ Tidak",'cls'
+                        "❌ Tidak", callback_data="close"
                     )
                 ]
             ]
