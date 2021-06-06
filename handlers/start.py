@@ -56,7 +56,7 @@ async def start(client: Client, message: Message):
                         "✅ Ya", switch_inline_query_current_chat=""
                     ),
                     InlineKeyboardButton(
-                        "❌ Tidak", callback_data="close"
+                        "❌ Tidak",'cls'
                     )
                 ]
             ]
