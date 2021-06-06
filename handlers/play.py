@@ -490,12 +490,6 @@ async def play(_, message: Message):
                 ],                     
                 [
                     InlineKeyboardButton(
-                        text="🎬 Tonton Di YouTube",
-                        url=f"{url}")
-
-                ],
-                [       
-                    InlineKeyboardButton(
                         text="🗑 Tutup",
                         callback_data='cls')
 
