@@ -483,15 +483,12 @@ async def play(_, message: Message):
             return
         dlurl=url
         dlurl=dlurl.replace("youtube","youtubepp")
+
         keyboard = InlineKeyboardMarkup(
             [   
                 [
                                
-                    InlineKeyboardButton(
-                        text="📥 Download",
-                        url=f"{dlurl}")
-                ],                     
-                [
+                    InlineKeyboardButton('⏯ Menu', callback_data='menu'),
                     InlineKeyboardButton(
                         text="🗑 Tutup",
                         callback_data='cls')
