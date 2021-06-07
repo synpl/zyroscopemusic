@@ -483,12 +483,13 @@ async def play(_, message: Message):
     keyboard = InlineKeyboardMarkup(
             [   
                 [
-                               
-                    InlineKeyboardButton('⏯ Menu', callback_data='menu'),
+                    InlineKeyboardButton('📖 Daftar Putar', callback_data='playlist'),
+                    InlineKeyboardButton('⏯ Menu', callback_data='menu')
+                ],                     
+                [
                     InlineKeyboardButton(
                         text="🗑 Tutup",
                         callback_data='cls')
-
                 ]                             
             ]
         )
@@ -523,7 +524,7 @@ async def play(_, message: Message):
         await message.reply_photo(
         photo="final.png",
         reply_markup=keyboard,
-        caption="🏷 **Nama:** wait\n⏱ **Durasi:** wait\n💡 **Status:** Sedang Memutar\n🎧 **Atas permintaan:** {}".format(
+        caption="🎼️ **Sedang Memutar Lagu Permintaan dari** {}".format(
         message.from_user.mention()
         ),
     )
