@@ -476,16 +476,18 @@ async def play(_, message: Message):
         views = results[0]["views"]
 
     except Exception as e:
-        await lel.edit("**Lagu tidak ditemukan.** Coba cari dengan judul lagu yang lebih jelas")
-        print(str(e))
-        return
-
-    keyboard = InlineKeyboardMarkup(
+            await lel.edit(
+                "Song not found.Try another song or maybe spell it properly."
+            )
+            print(str(e))
+            return
+        dlurl=url
+        dlurl=dlurl.replace("youtube","youtubepp")
+        keyboard = InlineKeyboardMarkup(
             [   
                 [
                                
-                    InlineKeyboardButton('📖 Daftar Putar', callback_data='playlist'),
-                    InlineKeyboardButton('⏯ Menu', callback_data='menu')
+                    InlineKeyboardButton(text="📥 Download", url=f"{dlurl}"),
                 
                 ],                     
                 [
@@ -527,7 +529,7 @@ async def play(_, message: Message):
         await message.reply_photo(
         photo="final.png",
         reply_markup=keyboard,
-        caption="🏷 **Nama:** {title}\n⏱ **Durasi:** {duration}\n💡 **Status:** Sedang Memutar\n🎧 **Atas permintaan:** {}".format(
+        caption="🏷 **Nama:** [{title}]({url})\n⏱ **Durasi:** {duration}\n💡 **Status:** Sedang Memutar\n🎧 **Atas permintaan:** {}".format(
         message.from_user.mention()
         ),
     )
