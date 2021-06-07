@@ -42,7 +42,7 @@ Ketik » /help « Untuk Melihat Daftar Perintah!
     )
 
 @Client.on_message(
-    filters.command("start")
+    filters.command(["start", "start@tofikdnbot"])
     & filters.group
     & ~ filters.edited
 )
