@@ -550,7 +550,7 @@ async def deezer(client: Client, message_: Message):
     wew = usar.id
     try:
         #chatdetails = await USER.get_chat(chid)
-        lmoa = await client.get_chat_member(chid,wew)
+        lmoa = await client.get_chat_member(chid, wew)
     except:
            for administrator in administrators:
                       if administrator == message_.from_user.id:  
@@ -580,7 +580,7 @@ async def deezer(client: Client, message_: Message):
                               pass
     try:
         chatdetails = await USER.get_chat(chid)
-        #lmoa = await client.get_chat_member(chid,wew)
+        #lmoa = await client.get_chat_member(chid, wew)
     except:
         await lel.edit(
             f"<i>Assistant Bot terkena banned dari Group ini, Minta admin untuk unbanned assistant bot lalu tambahkan Assistant Bot secara manual.</i>"
@@ -597,11 +597,11 @@ async def deezer(client: Client, message_: Message):
         if not songs.ok:
             await message_.reply_text(songs.result)
             return
-        title = r[0]["title"]
-        duration = int(r[0]["duration"])
-        thumbnail = r[0]["thumbnail"]
-        artist = r[0]["artist"]
-        url = r[0]["url"]
+        title = songs.result[0].title
+        url = songs.result[0].url
+        artist = songs.result[0].artist
+        duration = songs.result[0].duration
+        thumbnail = "https://telegra.ph/file/f6086f8909fbfeb0844f2.png"
     except:
         await res.edit(
             "Tidak Ditemukan Lagu Apa Pun!"
@@ -676,7 +676,7 @@ async def jiosaavn(client: Client, message_: Message):
     wew = usar.id
     try:
         #chatdetails = await USER.get_chat(chid)
-        lmoa = await client.get_chat_member(chid,wew)
+        lmoa = await client.get_chat_member(chid, wew)
     except:
            for administrator in administrators:
                       if administrator == message_.from_user.id:  
@@ -777,7 +777,12 @@ async def jiosaavn(client: Client, message_: Message):
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
-        callsmusic.pytgcalls.join_group_call(message_.chat.id, file_path)
+        qeue.append(appendable)
+        try:
+            callsmusic.pytgcalls.join_group_call(chat_id, file_path)
+        except:
+            res.edit("Group call is not connected of I can't join it")
+            return
     await res.edit("Generating Thumbnail.")
     await generate_cover(requested_by, sname, ssingers, sduration, sthumb)
     await res.delete()
