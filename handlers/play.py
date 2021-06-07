@@ -406,7 +406,7 @@ async def play(_, message: Message):
     try:
         user = await USER.get_me()
     except:
-        user.first_name =  "@tdbotmusic"
+        user.first_name =  "@tdassistant"
     usar = user
     wew = usar.id
     try:
@@ -476,15 +476,11 @@ async def play(_, message: Message):
         views = results[0]["views"]
 
     except Exception as e:
-            await lel.edit(
-                "**Lagu tidak ditemukan.** Coba cari dengan judul lagu yang lebih jelas."
-            )
-            print(str(e))
-            return
-        dlurl=url
-        dlurl=dlurl.replace("youtube","youtubepp")
+        await lel.edit("**Lagu tidak ditemukan.** Coba cari dengan judul lagu yang lebih jelas")
+        print(str(e))
+        return
 
-        keyboard = InlineKeyboardMarkup(
+    keyboard = InlineKeyboardMarkup(
             [   
                 [
                                
