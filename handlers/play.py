@@ -487,8 +487,9 @@ async def play(_, message: Message):
             [   
                 [
                                
-                    InlineKeyboardButton(text="📥 Download", url=f"{dlurl}"),
-                
+                    InlineKeyboardButton(
+                        text="📥 Download",
+                        url=f"{dlurl}")
                 ],                     
                 [
                     InlineKeyboardButton(
