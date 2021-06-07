@@ -41,9 +41,9 @@ from config import que
 from Python_ARQ import ARQ
 import json
 import wget
-chat_id = None
 
 aiohttpsession = aiohttp.ClientSession()
+chat_id = None
 arq = ARQ("https://thearq.tech", ARQ_API_KEY, aiohttpsession)
 
 
@@ -779,7 +779,7 @@ async def jiosaavn(client: Client, message_: Message):
         qeue.append(appendable)
         qeue.append(appendable)
         try:
-            callsmusic.pytgcalls.join_group_call(chat_id, file_path)
+            callsmusic.pytgcalls.join_group_call(message_.chat.id, file_path)
         except:
             res.edit("Group call is not connected of I can't join it")
             return
