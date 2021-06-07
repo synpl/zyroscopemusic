@@ -18,7 +18,11 @@
             "description": "Masukan Nama Bot MusicPlayer Mu. (isi bebas)",
             "required": false,
             "value": ""
-       },
+        },
+        "ARQ_API_KEY": {
+            "description": "Ambil api dari bot telegram » t.me/ARQRobot atau @ARQRobot",
+            "required": true
+        },
         "API_ID": {
             "description": "Masukan APP ID Silahkan Ambil dari my.telegram.org/apps",
             "required": true
