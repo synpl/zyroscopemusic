@@ -477,7 +477,7 @@ async def play(_, message: Message):
 
     except Exception as e:
             await lel.edit(
-                "Song not found.Try another song or maybe spell it properly."
+                "**Lagu tidak ditemukan.** Coba cari dengan judul lagu yang lebih jelas."
             )
             print(str(e))
             return
