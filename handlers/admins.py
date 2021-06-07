@@ -55,7 +55,7 @@ async def resume(_, message: Message):
         await message.reply_text("⏸ **Resumed!**")
 
 
-@Client.on_message(command("end") & other_filters)
+@Client.on_message(command(["end", "stop"]) & other_filters)
 @errors
 @authorized_users_only
 async def stop(_, message: Message):
