@@ -30,10 +30,10 @@ Ketik » /help « Untuk Melihat Daftar Perintah!
                         "➕ Tambahkan Ke Group ➕", url="https://t.me/tofikdnbot?startgroup=true")
                   ],[
                     InlineKeyboardButton(
-                         "📷 Instagram", url="https://www.instagram.com/tofik_dn"
+                         "🤖 Assistant", url="https://t.me/tdassistant"
                     ),
                     InlineKeyboardButton(
-                        "💾 Project Man", url="https://t.me/Lunatic0de"
+                        "📷 My Instagram", url="https://www.instagram.com/tofik_dn"
                     )
                 ]
             ]
