@@ -464,7 +464,7 @@ async def play(_, message: Message):
     ydl_opts = {"format": "bestaudio[ext=m4a]"}
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
-        url = f"https://youtube.com{results[0]['url_suffix']}"
+        url = f"https://www.youtube.com{results[0]['url_suffix']}"
         #print(results)
         title = results[0]["title"][:40]       
         thumbnail = results[0]["thumbnails"][0]
@@ -523,7 +523,7 @@ async def play(_, message: Message):
         await message.reply_photo(
         photo="final.png",
         reply_markup=keyboard,
-        caption=f"🏷 **Nama:** {title}\n⏱ **Durasi:** {duration}\n💡 **Status:** Sedang Memutar\n🎧 **Atas permintaan:** {}".format(
+        caption="🏷 **Nama:** wait\n⏱ **Durasi:** wait\n💡 **Status:** Sedang Memutar\n🎧 **Atas permintaan:** {}".format(
         message.from_user.mention()
         ),
     )
