@@ -1,45 +1,46 @@
-import json
-import os
 from os import path
-from typing import Callable
-
-import aiofiles
-import aiohttp
-import ffmpeg
-import requests
-import wget
-from PIL import Image, ImageDraw, ImageFont
-from pyrogram import Client, filters
-from pyrogram.types import Voice
-from pyrogram.errors import UserAlreadyParticipant
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
-from Python_ARQ import ARQ
-from youtube_search import YoutubeSearch
-
-from config import ARQ_API_KEY
-from config import BOT_NAME as bn
-from config import DURATION_LIMIT
-from config import que
-from cache.admins import admins as a
-from helpers.admins import get_administrators
-from helpers.errors import DurationLimitError
-from helpers.decorators import errors, authorized_users_only
-from helpers.filters import command, other_filters
-from helpers.gets import get_url, get_file_name
+from typing import Dict
+from pyrogram import Client
+from pyrogram.types import Message, Voice
+from typing import Callable, Coroutine, Dict, List, Tuple, Union
 from callsmusic import callsmusic, queues
-from callsmusic.callsmusic import client as USER
-import converter
+from helpers.admins import get_administrators
+from os import path
+import requests
+import aiohttp
 import youtube_dl
-from downloaders import youtube
+from youtube_search import YoutubeSearch
+from pyrogram import filters, emoji
 from pyrogram.types import InputMediaPhoto
 from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
 from pyrogram.errors.exceptions.flood_420 import FloodWait
 import traceback
+import os
 import sys
+from callsmusic.callsmusic import client as USER
+from pyrogram.errors import UserAlreadyParticipant
+import converter
+from downloaders import youtube
 
-aiohttpsession = aiohttp.ClientSession()
+from config import BOT_NAME as bn, DURATION_LIMIT
+from helpers.filters import command, other_filters
+from helpers.decorators import errors, authorized_users_only
+from helpers.errors import DurationLimitError
+from helpers.gets import get_url, get_file_name
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from cache.admins import admins as a
+import os
+import aiohttp
+import aiofiles
+import ffmpeg
+from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw
+from config import que
+from Python_ARQ import ARQ
+import json
+import wget
 chat_id = None
-arq = ARQ("https://thearq.tech", ARQ_API_KEY, aiohttpsession)
 
 
 def cb_admin_check(func: Callable) -> Callable:
@@ -113,8 +114,6 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     os.remove("temp.png")
     os.remove("background.png")
 
-
- 
 
 @Client.on_message(
     filters.command("playlist")
@@ -525,270 +524,5 @@ async def play(_, message: Message):
     )
         os.remove("final.png")
         return await lel.delete()
-
-
-@Client.on_message(
-    filters.command("dplay")
-    & filters.group
-    & ~ filters.edited
-)
-async def deezer(client: Client, message_: Message):
-    global que
-    lel = await message_.reply("🔄 **Sedang Memproses Lagu**")
-    administrators = await get_administrators(message_.chat)
-    chid = message_.chat.id
-    try:
-        user = await USER.get_me()
-    except:
-        user.first_name =  "tofikdnbot"
-    usar = user
-    wew = usar.id
-    try:
-        #chatdetails = await USER.get_chat(chid)
-        lmoa = await client.get_chat_member(chid, wew)
-    except:
-           for administrator in administrators:
-                      if administrator == message_.from_user.id:  
-                          try:
-                              invitelink = await client.export_chat_invite_link(chid)
-                          except:
-                              await lel.edit(
-                                  "<b>Tambahkan saya sebagai admin grup Anda terlebih dahulu</b>",
-                              )
-                              return
-
-                          try:
-                              await USER.join_chat(invitelink)
-                              await USER.send_message(message_.chat.id,"Saya bergabung dengan group ini untuk memainkan musik di VCG")
-                              await lel.edit(
-                                  "<b>Assistant Bot berhasil bergabung dengan Group anda</b>",
-                              )
-
-                          except UserAlreadyParticipant:
-                              pass
-                          except Exception as e:
-                              #print(e)
-                              await lel.edit(
-                                  f"<b>🔴 Flood Wait Error 🔴 \nAssistant Bot tidak dapat bergabung dengan group Anda karena banyaknya permintaan bergabung untuk userbot! Pastikan pengguna tidak dibanned dalam group."
-                                  "\n\nAtau tambahkan Assistant Bot secara manual ke Grup Anda dan coba lagi</b>",
-                              )
-                              pass
-    try:
-        chatdetails = await USER.get_chat(chid)
-        #lmoa = await client.get_chat_member(chid, wew)
-    except:
-        await lel.edit(
-            f"<i>Assistant Bot terkena banned dari Group ini, Minta admin untuk unbanned assistant bot lalu tambahkan Assistant Bot secara manual.</i>"
-        )
-        return                            
-    requested_by = message_.from_user.first_name   
-
-    text = message_.text.split(" ", 1)
-    queryy = text[1]
-    res = lel
-    await res.edit(f"**Sedang Mencari Lagu** `{queryy}` on deezer")
-    try:
-        songs = await arq.deezer(query,1)
-        if not songs.ok:
-            await message_.reply_text(songs.result)
-            return
-        title = songs.result[0].title
-        url = songs.result[0].url
-        artist = songs.result[0].artist
-        duration = songs.result[0].duration
-        thumbnail = "https://telegra.ph/file/f6086f8909fbfeb0844f2.png"
-    except:
-        await res.edit(
-            "**Tidak Ditemukan Lagu Apa Pun!**"
-        )
-        return
-    keyboard = InlineKeyboardMarkup(
-         [   
-             [
-                 InlineKeyboardButton('📖 Daftar Putar', callback_data='playlist'),
-                 InlineKeyboardButton('⏯ Menu', callback_data='menu')     
-             ],                     
-             [
-                 InlineKeyboardButton(
-                     text="🗑 Tutup",
-                     callback_data='cls')
-
-            ]                      
-         ]
-     )
-    file_path= await converter.convert(wget.download(url))
-    await res.edit("📥 **Generating Thumbnail**")
-    await generate_cover(requested_by, title, artist, duration, thumbnail)
-    chat_id = get_chat_id(message_.chat)
-    if chat_id in callsmusic.pytgcalls.active_calls:
-        await res.edit("adding in queue")
-        position = await queues.put(chat_id, file=file_path)
-        qeue = que.get(chat_id)
-        s_name = title
-        r_by = message_.from_user
-        loc = file_path
-        appendable = [s_name, r_by, loc]
-        qeue.append(appendable)
-        await res.edit_text(f"🎼 **Lagu yang Anda minta Sedang Antri di posisi** {position}")
-    else:
-        await res.edit_text(f"🎼️ **Sedang Memutar Lagu**")
-        que[chat_id] = []
-        qeue = que.get(chat_id)
-        s_name = title
-        r_by = message_.from_user
-        loc = file_path
-        appendable = [s_name, r_by, loc]
-        qeue.append(appendable)
-        try:
-            callsmusic.pytgcalls.join_group_call(chat_id, file_path)
-        except:
-            res.edit("Group call is not connected of I can't join it")
-            return
-
-    await res.delete()
-
-    m = await client.send_photo(
-        chat_id=message_.chat.id,
-        reply_markup=keyboard,
-        photo="final.png",
-        caption=f"🎼️ **Sedang Memutar Lagu** [{title}]({url}) Via Deezer"
-    ) 
-    os.remove("final.png")
-
-
-@Client.on_message(
-    filters.command("splay")
-    & filters.group
-    & ~ filters.edited
-)
-async def jiosaavn(client: Client, message_: Message):
-    global que
-    lel = await message_.reply("🔄 **Sedang Memproses Lagu**")
-    administrators = await get_administrators(message_.chat)
-    chid = message_.chat.id
-    try:
-        user = await USER.get_me()
-    except:
-        user.first_name =  "tofikdnbot"
-    usar = user
-    wew = usar.id
-    try:
-        #chatdetails = await USER.get_chat(chid)
-        lmoa = await client.get_chat_member(chid, wew)
-    except:
-           for administrator in administrators:
-                      if administrator == message_.from_user.id:  
-                          try:
-                              invitelink = await client.export_chat_invite_link(chid)
-                          except:
-                              await lel.edit(
-                                  "<b>Tambahkan saya sebagai admin grup Anda terlebih dahulu</b>",
-                              )
-                              return
-
-                          try:
-                              await USER.join_chat(invitelink)
-                              await USER.send_message(message_.chat.id,"Saya bergabung dengan group ini untuk memainkan musik di VCG")
-                              await lel.edit(
-                                  "<b>Assistant Bot berhasil bergabung dengan Group anda</b>",
-                              )
-
-                          except UserAlreadyParticipant:
-                              pass
-                          except Exception as e:
-                              #print(e)
-                              await lel.edit(
-                                  f"<b>🔴 Flood Wait Error 🔴 \nAssistant Bot tidak dapat bergabung dengan group Anda karena banyaknya permintaan bergabung untuk userbot! Pastikan pengguna tidak dibanned dalam group."
-                                  "\n\nAtau tambahkan Assistant Bot secara manual ke Group Anda dan coba lagi</b>",
-                              )
-                              pass
-    try:
-        chatdetails = await USER.get_chat(chid)
-        #lmoa = await client.get_chat_member(chid,wew)
-    except:
-        await lel.edit(
-            "<i>Assistant Bot terkena banned dari Group ini, Minta admin untuk unbanned assistant bot lalu tambahkan Assistant Bot secara manual.</i>"
-        )
-        return     
-    requested_by = message_.from_user.first_name
-    chat_id = message_.chat.id
-    text = message_.text.split(" ", 1)
-    query = text[1]
-    res = lel
-    await res.edit(f"**Sedang Mencari** `{query}` dari jio saavn")
-    try:
-        songs = await arq.saavn(query)
-        if not songs.ok:
-            await message_.reply_text(songs.result)
-            return
-        sname = songs.result[0].song
-        slink = songs.result[0].media_url
-        ssingers = songs.result[0].singers
-        sthumb = songs.result[0].image
-        sduration = int(songs.result[0].duration)
-    except Exception as e:
-        await res.edit(
-            "**Tidak Ditemukan Lagu Apa Pun!**"
-        )
-        print(str(e))
-        return
-    keyboard = InlineKeyboardMarkup(
-         [   
-             [
-               InlineKeyboardButton('📖 Daftar Putar', callback_data='playlist'),
-               InlineKeyboardButton('⏯ Menu', callback_data='menu')   
-             ],                     
-             [
-               InlineKeyboardButton(
-                   text="🗑 Tutup",
-                   callback_data='cls')
-
-            ]                          
-         ]
-     )
-    file_path= await converter.convert(wget.download(slink))
-    chat_id = get_chat_id(message_.chat)
-    if chat_id in callsmusic.pytgcalls.active_calls:
-        position = await queues.put(chat_id, file=file_path)
-        qeue = que.get(chat_id)
-        s_name = sname
-        r_by = message_.from_user
-        loc = file_path
-        appendable = [s_name, r_by, loc]
-        qeue.append(appendable)
-        await res.delete()
-        m = await client.send_photo(
-            chat_id=message_.chat.id,
-            reply_markup=keyboard,
-            photo="final.png",
-            caption=f"🎼️ **Lagu yang Anda minta Sedang Antri di posisi** {position}",
-        
-        )           
-           
-    else:
-        await res.edit_text("🎼️ **Sedang Memutar Lagu**")
-        que[chat_id] = []
-        qeue = que.get(chat_id)
-        s_name = sname
-        r_by = message_.from_user
-        loc = file_path
-        appendable = [s_name, r_by, loc]
-        qeue.append(appendable)
-        try:
-            callsmusic.pytgcalls.join_group_call(chat_id, file_path)
-        except:
-            res.edit("Group call is not connected of I can't join it")
-            return
-    await res.edit("Generating Thumbnail.")
-    await generate_cover(requested_by, sname, ssingers, sduration, sthumb)
-    await res.delete()
-    m = await client.send_photo(
-        chat_id=message_.chat.id,
-        reply_markup=keyboard,
-        photo="final.png",
-        caption=f"🎼️ **Sedang Memutar Lagu** {sname} Via Jiosaavn",
-        
-    )
-    os.remove("final.png")
 
 # Have u read all. If read RESPECT :-)
