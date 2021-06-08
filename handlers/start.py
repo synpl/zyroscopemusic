@@ -1,8 +1,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
-
-
 @Client.on_message(
     filters.command("start")
     & filters.private
@@ -72,16 +70,12 @@ async def help(client: Client, message: Message):
     await message.reply_text(
         f"""<b>Hi {message.from_user.first_name}!
 \n/play <nama lagu>  - Untuk Memutar lagu yang Anda minta melalui YouTube
-/dplay <nama lagu>  - Untuk Memutar lagu yang Anda minta melalui deezer
-/splay <nama lagu>  - Untuk Memutar lagu yang Anda minta melalui jio saavn
 /playlist - Untuk Menampilkan daftar putar Lagu sekarang
 /current - Untuk Menunjukkan  Lagu sekarang yang sedang diputar
 /song <nama lagu> - Untuk Mendownload lagu dari YouTube 
 /search <nama lagu> - Untuk Mencari Video di YouTube dengan detail
-/deezer <nama lagu> - Untuk Mendownload lagu dari deezer 
-/saavn <nama lagu> - Untuk Mendownload lagu dari website saavn
 /video <nama lagu> - Untuk Mendownload Video di YouTube dengan detail
-\n*Admins only*
+\n*Admins Only*
 /player - Open music player settings panel
 /pause - Untuk Menjeda pemutaran Lagu
 /resume - Untuk Melanjutkan pemutaran Lagu yang di pause
