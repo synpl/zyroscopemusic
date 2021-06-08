@@ -599,7 +599,7 @@ async def deezer(client: Client, message_: Message):
         thumbnail = "https://telegra.ph/file/f6086f8909fbfeb0844f2.png"
     except:
         await res.edit(
-            "Tidak Ditemukan Lagu Apa Pun!"
+            "**Tidak Ditemukan Lagu Apa Pun!**"
         )
         return
     keyboard = InlineKeyboardMarkup(
@@ -769,7 +769,6 @@ async def jiosaavn(client: Client, message_: Message):
         r_by = message_.from_user
         loc = file_path
         appendable = [s_name, r_by, loc]
-        qeue.append(appendable)
         qeue.append(appendable)
         try:
             callsmusic.pytgcalls.join_group_call(message_.chat.id, file_path)
