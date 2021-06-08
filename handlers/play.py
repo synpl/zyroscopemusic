@@ -39,13 +39,13 @@ def cb_admin_check(func: Callable) -> Callable:
         if cb.from_user.id in admemes:
             return await func(client, cb)
         else:
-            await cb.answer('Anda tidak diizinkan!', show_alert=True)
+            await cb.answer("Anda tidak diizinkan!", show_alert=True)
             return
     return decorator                                                                       
                                           
                                                                                     
 def transcode(filename):
-    ffmpeg.input(filename).output("input.raw", format='s16le', acodec='pcm_s16le', ac=2, ar='48k').overwrite_output().run() 
+    ffmpeg.input(filename).output("input.raw", format="s16le", acodec="pcm_s16le", ac=2, ar="48k").overwrite_output().run() 
     os.remove(filename)
 
 # Convert seconds to mm:ss
@@ -236,123 +236,123 @@ async def m_cb(b, cb):
     m_chat = cb.message.chat
 
     the_data = cb.message.reply_markup.inline_keyboard[1][0].callback_data
-    if type_ == 'pause':
+    if type_ == "pause":
         if (
             chat_id not in callsmusic.pytgcalls.active_calls
                 ) or (
-                    callsmusic.pytgcalls.active_calls[chat_id] == 'paused'
+                    callsmusic.pytgcalls.active_calls[chat_id] == "paused"
                 ):
-            await cb.answer('Assistant Sedang Tidak Terhubung dengan VCG!', show_alert=True)
+            await cb.answer("Assistant Sedang Tidak Terhubung dengan VCG!", show_alert=True)
         else:
             callsmusic.pytgcalls.pause_stream(chat_id)
             
-            await cb.answer('Music Paused!')
-            await cb.message.edit(updated_stats(m_chat, qeue), reply_markup=r_ply('play'))
+            await cb.answer("Music Paused!")
+            await cb.message.edit(updated_stats(m_chat, qeue), reply_markup=r_ply("play"))
                 
 
-    elif type_ == 'play':       
+    elif type_ == "play":       
         if (
             chat_id not in callsmusic.pytgcalls.active_calls
             ) or (
-                callsmusic.pytgcalls.active_calls[chat_id] == 'playing'
+                callsmusic.pytgcalls.active_calls[chat_id] == "playing"
             ):
-                await cb.answer('Assistant Sedang Tidak Terhubung dengan VCG!', show_alert=True)
+                await cb.answer("Assistant Sedang Tidak Terhubung dengan VCG!", show_alert=True)
         else:
             callsmusic.pytgcalls.resume_stream(chat_id)
-            await cb.answer('Music Resumed!')
-            await cb.message.edit(updated_stats(m_chat, qeue), reply_markup=r_ply('pause'))
+            await cb.answer("Music Resumed!")
+            await cb.message.edit(updated_stats(m_chat, qeue), reply_markup=r_ply("pause"))
                      
 
-    elif type_ == 'playlist':
+    elif type_ == "playlist":
         queue = que.get(cb.message.chat.id)
         if not queue:   
-            await cb.message.edit('Sedang tidak memutar lagu')
+            await cb.message.edit("Sedang tidak memutar lagu")
         temp = []
         for t in queue:
             temp.append(t)
         now_playing = temp[0][0]
-        by = temp[0][1].mention(style='md')
+        by = temp[0][1].mention(style="md")
         msg = "**Lagu Yang Sedang dimainkan** di {}".format(cb.message.chat.title)
         msg += "\n• "+ now_playing
         msg += "\n• Atas permintaan "+by
         temp.pop(0)
         if temp:
-             msg += '\n\n'
-             msg += '**Antrian Lagu**'
+             msg += "\n\n"
+             msg += "**Antrian Lagu**"
              for song in temp:
                  name = song[0]
-                 usr = song[1].mention(style='md')
-                 msg += f'\n• {name}'
-                 msg += f'\n• Atas permintaan {usr}\n'
+                 usr = song[1].mention(style="md")
+                 msg += f"\n• {name}"
+                 msg += f"\n• Atas permintaan {usr}\n"
         await cb.message.edit(msg)      
                       
-    elif type_ == 'resume':     
+    elif type_ == "resume":     
         if (
             chat_id not in callsmusic.pytgcalls.active_calls
             ) or (
-                callsmusic.pytgcalls.active_calls[chat_id] == 'playing'
+                callsmusic.pytgcalls.active_calls[chat_id] == "playing"
             ):
-                await cb.answer('Obrolan tidak terhubung atau sudah dimainkan', show_alert=True)
+                await cb.answer("Obrolan tidak terhubung atau sudah dimainkan", show_alert=True)
         else:
             callsmusic.pytgcalls.resume_stream(chat_id)
-            await cb.answer('Music Resumed!')     
-    elif type_ == 'puse':         
+            await cb.answer("Music Resumed!")     
+    elif type_ == "puse":         
         if (
             chat_id not in callsmusic.pytgcalls.active_calls
                 ) or (
-                    callsmusic.pytgcalls.active_calls[chat_id] == 'paused'
+                    callsmusic.pytgcalls.active_calls[chat_id] == "paused"
                 ):
-            await cb.answer('Obrolan tidak terhubung atau sudah di pause', show_alert=True)
+            await cb.answer("Obrolan tidak terhubung atau sudah di pause", show_alert=True)
         else:
             callsmusic.pytgcalls.pause_stream(chat_id)
             
-            await cb.answer('Music Paused!')
-    elif type_ == 'cls':          
-        await cb.answer('Closed menu')
+            await cb.answer("Music Paused!")
+    elif type_ == "cls":          
+        await cb.answer("Closed menu")
         await cb.message.delete()       
 
-    elif type_ == 'menu':  
+    elif type_ == "menu":  
         stats = updated_stats(cb.message.chat, qeue)  
-        await cb.answer('Menu opened')
+        await cb.answer("Menu opened")
         marr = InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton('⏹', 'leave'),
-                    InlineKeyboardButton('⏸', 'puse'),
-                    InlineKeyboardButton('▶️', 'resume'),
-                    InlineKeyboardButton('⏭', 'skip')
+                    InlineKeyboardButton("⏹", "leave"),
+                    InlineKeyboardButton("⏸", "puse"),
+                    InlineKeyboardButton("▶️", "resume"),
+                    InlineKeyboardButton("⏭", "skip")
                 
                 ],
                 [
-                    InlineKeyboardButton('📖 Daftar Putar', 'playlist'),
+                    InlineKeyboardButton("📖 Daftar Putar", "playlist"),
                 
                 ],
                 [       
-                    InlineKeyboardButton("🗑 Tutup",'cls')
+                    InlineKeyboardButton("🗑 Tutup", "cls")
                 ]        
             ]
         )
         await cb.message.edit(stats, reply_markup=marr) 
-    elif type_ == 'skip':        
+    elif type_ == "skip":        
         if qeue:
             skip = qeue.pop(0)
         if chat_id not in callsmusic.pytgcalls.active_calls:
-            await cb.answer('Assistant Sedang Tidak Terhubung dengan VCG!', show_alert=True)
+            await cb.answer("Assistant Sedang Tidak Terhubung dengan VCG!", show_alert=True)
         else:
             callsmusic.queues.task_done(chat_id)
 
             if callsmusic.queues.is_empty(chat_id):
                 callsmusic.pytgcalls.leave_group_call(chat_id)
                 
-                await cb.message.edit('• Tidak Ada Lagi Daftar Putar.\n• Meninggalkan VCG!')
+                await cb.message.edit("• Tidak Ada Lagi Daftar Putar.\n• Meninggalkan VCG!")
             else:
                 callsmusic.pytgcalls.change_stream(
                     chat_id,
                     callsmusic.queues.get(chat_id)["file"]
                 )
-                await cb.answer('Skipped')
+                await cb.answer("Skipped")
                 await cb.message.edit((m_chat, qeue), reply_markup=r_ply(the_data))
-                await cb.message.reply_text(f'• Skipped track\n• Now Playing **{qeue[0][0]}**')
+                await cb.message.reply_text(f"• Skipped track\n• Now Playing **{qeue[0][0]}**")
 
     else:      
         if chat_id in callsmusic.pytgcalls.active_calls:
@@ -362,9 +362,9 @@ async def m_cb(b, cb):
                 pass
 
             callsmusic.pytgcalls.leave_group_call(chat_id)
-            await cb.message.edit('Berhasil Keluar dari Group!')
+            await cb.message.edit("Berhasil Keluar dari Group!")
         else:
-            await cb.answer('Assistant Sedang Tidak Terhubung dengan VCG!', show_alert=True)
+            await cb.answer("Assistant Sedang Tidak Terhubung dengan VCG!", show_alert=True)
 
 @Client.on_message(command(["play", "td"]) & other_filters)
 async def play(_, message: Message):
@@ -376,12 +376,12 @@ async def play(_, message: Message):
     try:
         user = await USER.get_me()
     except:
-        user.first_name =  "@tdassistant"
+        user.first_name = "@tdassistant"
     usar = user
     wew = usar.id
     try:
         #chatdetails = await USER.get_chat(chid)
-        lmoa = await _.get_chat_member(chid,wew)
+        lmoa = await _.get_chat_member(chid, wew)
     except:
            for administrator in administrators:
                       if administrator == message.from_user.id:  
@@ -411,7 +411,7 @@ async def play(_, message: Message):
                               pass
     try:
         chatdetails = await USER.get_chat(chid)
-        #lmoa = await client.get_chat_member(chid,wew)
+        #lmoa = await client.get_chat_member(chid, wew)
     except:
         await lel.edit(
             f"<i>Assistant Bot terkena banned dari Group ini, Minta admin untuk unbanned assistant bot lalu tambahkan Assistant Bot secara manual</i>"
@@ -426,9 +426,9 @@ async def play(_, message: Message):
     user_name = message.from_user.first_name
     rpk = "["+user_name+"](tg://user?id="+str(user_id)+")"
 
-    query = ''
+    query = ""
     for i in message.command[1:]:
-        query += ' ' + str(i)
+        query += " " + str(i)
     print(query)
     await lel.edit("🎵 **Sedang Memproses Lagu**")
     ydl_opts = {"format": "bestaudio[ext=m4a]"}
@@ -438,9 +438,9 @@ async def play(_, message: Message):
         #print(results)
         title = results[0]["title"][:40]       
         thumbnail = results[0]["thumbnails"][0]
-        thumb_name = f'thumb{title}.jpg'
+        thumb_name = f"thumb{title}.jpg"
         thumb = requests.get(thumbnail, allow_redirects=True)
-        open(thumb_name, 'wb').write(thumb.content)
+        open(thumb_name, "wb").write(thumb.content)
         duration = results[0]["duration"]
         url_suffix = results[0]["url_suffix"]
         views = results[0]["views"]
@@ -453,13 +453,13 @@ async def play(_, message: Message):
     keyboard = InlineKeyboardMarkup(
             [   
                 [
-                    InlineKeyboardButton('📖 Daftar Putar', callback_data='playlist'),
-                    InlineKeyboardButton('⏯ Menu', callback_data='menu')
+                    InlineKeyboardButton("📖 Daftar Putar", callback_data="playlist"),
+                    InlineKeyboardButton("⏯ Menu", callback_data="menu")
                 ],                     
                 [
                     InlineKeyboardButton(
                         text="🗑 Tutup",
-                        callback_data='cls')
+                        callback_data="cls")
                 ]                             
             ]
         )
