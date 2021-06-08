@@ -733,7 +733,6 @@ async def jiosaavn(client: Client, message_: Message):
             "**Tidak Ditemukan Lagu Apa Pun!**"
         )
         print(str(e))
-        is_playing = False
         return
     keyboard = InlineKeyboardMarkup(
          [   
