@@ -157,7 +157,7 @@ def r_ply(type_):
                 InlineKeyboardButton("⏹", "leave"),
                 InlineKeyboardButton("⏸", "puse"),
                 InlineKeyboardButton("▶️", "resume"),
-                InlineKeyboardButton("⏭", "skip")'
+                InlineKeyboardButton("⏭", "skip")
             ],
             [
                 InlineKeyboardButton("📖 Daftar Putar", "playlist"),
