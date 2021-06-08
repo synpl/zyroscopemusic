@@ -1,46 +1,41 @@
+import json
+import os
 from os import path
-from typing import Dict
-from pyrogram import Client
-from pyrogram.types import Message, Voice
-from typing import Callable, Coroutine, Dict, List, Tuple, Union
-from callsmusic import callsmusic, queues
-from helpers.admins import get_administrators
-from os import path
-import requests
+from typing import Callable
+
+import aiofiles
 import aiohttp
-import youtube_dl
+import ffmpeg
+import requests
+import wget
+from PIL import Image, ImageDraw, ImageFont
+from pyrogram import Client, filters
+from pyrogram.types import Voice
+from pyrogram.errors import UserAlreadyParticipant
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+from Python_ARQ import ARQ
 from youtube_search import YoutubeSearch
-from pyrogram import filters, emoji
+
+from config import ARQ_API_KEY
+from config import BOT_NAME as bn
+from config import DURATION_LIMIT
+from config import que
+from cache.admins import admins as a
+from helpers.admins import get_administrators
+from helpers.errors import DurationLimitError
+from helpers.decorators import errors, authorized_users_only
+from helpers.filters import command, other_filters
+from helpers.gets import get_url, get_file_name
+from callsmusic import callsmusic, queues
+from callsmusic.callsmusic import client as USER
+import converter
+import youtube_dl
+from downloaders import youtube
 from pyrogram.types import InputMediaPhoto
 from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
 from pyrogram.errors.exceptions.flood_420 import FloodWait
 import traceback
-import os
 import sys
-from callsmusic.callsmusic import client as USER
-from pyrogram.errors import UserAlreadyParticipant
-import converter
-from downloaders import youtube
-
-from config import ARQ_API_KEY
-from config import BOT_NAME as bn, DURATION_LIMIT
-from helpers.filters import command, other_filters
-from helpers.decorators import errors, authorized_users_only
-from helpers.errors import DurationLimitError
-from helpers.gets import get_url, get_file_name
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from cache.admins import admins as a
-import os
-import aiohttp
-import aiofiles
-import ffmpeg
-from PIL import Image
-from PIL import ImageFont
-from PIL import ImageDraw
-from config import que
-from Python_ARQ import ARQ
-import json
-import wget
 
 aiohttpsession = aiohttp.ClientSession()
 chat_id = None
@@ -606,7 +601,6 @@ async def deezer(client: Client, message_: Message):
         await res.edit(
             "Tidak Ditemukan Lagu Apa Pun!"
         )
-        is_playing = False
         return
     keyboard = InlineKeyboardMarkup(
          [   
