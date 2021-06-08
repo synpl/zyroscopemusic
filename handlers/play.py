@@ -1,45 +1,35 @@
-from os import path
-from typing import Dict
-from pyrogram import Client
-from pyrogram.types import Message, Voice
-from typing import Callable, Coroutine, Dict, List, Tuple, Union
-from callsmusic import callsmusic, queues
-from helpers.admins import get_administrators
-from os import path
-import requests
-import aiohttp
-import youtube_dl
-from youtube_search import YoutubeSearch
-from pyrogram import filters, emoji
-from pyrogram.types import InputMediaPhoto
-from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
-from pyrogram.errors.exceptions.flood_420 import FloodWait
-import traceback
-import os
-import sys
-from callsmusic.callsmusic import client as USER
-from pyrogram.errors import UserAlreadyParticipant
-import converter
-from downloaders import youtube
-
-from config import BOT_NAME as bn, DURATION_LIMIT
-from helpers.filters import command, other_filters
-from helpers.decorators import errors, authorized_users_only
-from helpers.errors import DurationLimitError
-from helpers.gets import get_url, get_file_name
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from cache.admins import admins as a
-import os
-import aiohttp
-import aiofiles
-import ffmpeg
-from PIL import Image
-from PIL import ImageFont
-from PIL import ImageDraw
-from config import que
-from Python_ARQ import ARQ
 import json
+import os
+from os import path
+from typing import Callable
+
+import aiofiles
+import aiohttp
+import ffmpeg
+import requests
 import wget
+from PIL import Image, ImageDraw, ImageFont
+from pyrogram import Client, filters
+from pyrogram.types import Voice
+from pyrogram.errors import UserAlreadyParticipant
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+from Python_ARQ import ARQ
+from youtube_search import YoutubeSearch
+
+from config import BOT_NAME as bn
+from config import DURATION_LIMIT
+from config import que
+from cache.admins import admins as a
+from helpers.admins import get_administrators
+from helpers.errors import DurationLimitError
+from helpers.decorators import errors
+from helpers.decorators import authorized_users_only
+from helpers.filters import command, other_filters
+from helpers.gets import get_file_name
+from callsmusic import callsmusic, queues
+from callsmusic.callsmusic import client as USER
+from converter.converter import convert
+from downloaders import youtube
 chat_id = None
 
 
@@ -115,33 +105,29 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     os.remove("background.png")
 
 
-@Client.on_message(
-    filters.command("playlist")
-    & filters.group
-    & ~ filters.edited
-)
+@Client.on_message(filters.command("playlist") & filters.group & ~ filters.edited)
 async def playlist(client, message):
     global que
     queue = que.get(message.chat.id)
     if not queue:
-        await message.reply_text('Sedang tidak memutar lagu')
+        await message.reply_text("**Sedang tidak memutar lagu!**")
     temp = []
     for t in queue:
         temp.append(t)
     now_playing = temp[0][0]
-    by = temp[0][1].mention(style='md')
+    by = temp[0][1].mention(style="md")
     msg = "**Lagu Yang Sedang dimainkan** di {}".format(message.chat.title)
     msg += "\n• "+ now_playing
     msg += "\n• Atas permintaan "+by
     temp.pop(0)
     if temp:
-        msg += '\n\n'
-        msg += '**Antrian Lagu**'
+        msg += "\n\n"
+        msg += "**Antrian Lagu**"
         for song in temp:
             name = song[0]
-            usr = song[1].mention(style='md')
-            msg += f'\n• {name}'
-            msg += f'\n• Atas permintaan {usr}\n'
+            usr = song[1].mention(style="md")
+            msg += f"\n• {name}"
+            msg += f"\n• Atas permintaan {usr}\n"
     await message.reply_text(msg)       
     
 # ============================= Settings =========================================
@@ -149,60 +135,50 @@ async def playlist(client, message):
 def updated_stats(chat, queue, vol=100):
     if chat.id in callsmusic.pytgcalls.active_calls:
     #if chat.id in active_chats:
-        stats = 'Pengaturan dari **{}**'.format(chat.title)
+        stats = "Pengaturan dari **{}**".format(chat.title)
         if len(que) > 0:
-            stats += '\n\n'
-            stats += 'Volume: {}%\n'.format(vol)
-            stats += 'Lagu dalam antrian: `{}`\n'.format(len(que))
-            stats += 'Sedang memutar lagu: **{}**\n'.format(queue[0][0])
-            stats += 'Atas permintaan: {}'.format(queue[0][1].mention)
+            stats += "\n\n"
+            stats += "Volume: {}%\n".format(vol)
+            stats += "Lagu dalam antrian: `{}`\n".format(len(que))
+            stats += "Sedang memutar lagu: **{}**\n".format(queue[0][0])
+            stats += "Atas permintaan: {}".format(queue[0][1].mention)
     else:
         stats = None
     return stats
 
 def r_ply(type_):
-    if type_ == 'play':
-        ico = '▶'
+    if type_ == "play":
+        pass
     else:
-        ico = '⏸'
+        pass
     mar = InlineKeyboardMarkup(
         [
             [
-                InlineKeyboardButton('⏹', 'leave'),
-                InlineKeyboardButton('⏸', 'puse'),
-                InlineKeyboardButton('▶️', 'resume'),
-                InlineKeyboardButton('⏭', 'skip')
-                
+                InlineKeyboardButton("⏹", "leave"),
+                InlineKeyboardButton("⏸", "puse"),
+                InlineKeyboardButton("▶️", "resume"),
+                InlineKeyboardButton("⏭", "skip")'
             ],
             [
-                InlineKeyboardButton('📖 Daftar Putar', 'playlist'),
-                
+                InlineKeyboardButton("📖 Daftar Putar", "playlist"),
             ],
             [       
-                InlineKeyboardButton("🗑 Tutup",'cls')
+                InlineKeyboardButton("🗑 Tutup", "cls")
             ]        
         ]
     )
     return mar
 
-@Client.on_message(
-    filters.command("current")
-    & filters.group
-    & ~ filters.edited
-)
+@Client.on_message(filters.command("current") & filters.group & ~ filters.edited)
 async def ee(client, message):
     queue = que.get(message.chat.id)
     stats = updated_stats(message.chat, queue)
     if stats:
         await message.reply(stats)              
     else:
-        await message.reply('Silahkan Nyalakan dulu VCG nya!')
-
-@Client.on_message(
-    filters.command("player")
-    & filters.group
-    & ~ filters.edited
-)
+        await message.reply("**Silahkan Nyalakan dulu VCG nya!**")
+        
+@Client.on_message(filters.command("player") & filters.group & ~ filters.edited)
 @authorized_users_only
 async def settings(client, message):
     playing = None
@@ -212,14 +188,14 @@ async def settings(client, message):
     stats = updated_stats(message.chat, queue)
     if stats:
         if playing:
-            await message.reply(stats, reply_markup=r_ply('pause'))
+            await message.reply(stats, reply_markup=r_ply("pause"))
             
         else:
-            await message.reply(stats, reply_markup=r_ply('play'))
+            await message.reply(stats, reply_markup=r_ply("play"))
     else:
-        await message.reply('Silahkan Nyalakan dulu VCG nya!')
+        await message.reply("**Silahkan Nyalakan dulu VCG nya!**")
 
-@Client.on_callback_query(filters.regex(pattern=r'^(playlist)$'))
+@Client.on_callback_query(filters.regex(pattern=r"^(playlist)$"))
 async def p_cb(b, cb):
     global que    
     qeue = que.get(cb.message.chat.id)
@@ -227,30 +203,30 @@ async def p_cb(b, cb):
     chat_id = cb.message.chat.id
     m_chat = cb.message.chat
     the_data = cb.message.reply_markup.inline_keyboard[1][0].callback_data
-    if type_ == 'playlist':           
+    if type_ == "playlist":           
         queue = que.get(cb.message.chat.id)
         if not queue:   
-            await cb.message.edit('Sedang tidak Memutar lagu')
+            await cb.message.edit("**Sedang tidak memutar lagu!**")
         temp = []
         for t in queue:
             temp.append(t)
         now_playing = temp[0][0]
-        by = temp[0][1].mention(style='md')
+        by = temp[0][1].mention(style="md")
         msg = "**Lagu Yang Sedang dimainkan** di {}".format(cb.message.chat.title)
         msg += "\n• "+ now_playing
         msg += "\n• Atas permintaan "+by
         temp.pop(0)
         if temp:
-             msg += '\n\n'
-             msg += '**Antrian Lagu**'
+             msg += "\n\n"
+             msg += "**Antrian Lagu**"
              for song in temp:
                  name = song[0]
-                 usr = song[1].mention(style='md')
-                 msg += f'\n• {name}'
-                 msg += f'\n• Atas permintaan {usr}\n'
+                 usr = song[1].mention(style="md")
+                 msg += f"\n• {name}"
+                 msg += f"\n• Atas permintaan {usr}\n"
         await cb.message.edit(msg)      
 
-@Client.on_callback_query(filters.regex(pattern=r'^(play|pause|skip|leave|puse|resume|menu|cls)$'))
+@Client.on_callback_query(filters.regex(pattern=r"^(play|pause|skip|leave|puse|resume|menu|cls)$"))
 @cb_admin_check
 async def m_cb(b, cb):
     global que    
