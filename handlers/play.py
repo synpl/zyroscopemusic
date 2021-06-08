@@ -619,10 +619,11 @@ async def deezer(client: Client, message_: Message):
     file_path= await converter.convert(wget.download(url))
     await res.edit("📥 **Generating Thumbnail**")
     await generate_cover(requested_by, title, artist, duration, thumbnail)
-    if message_.chat.id in callsmusic.pytgcalls.active_calls:
+    chat_id = get_chat_id(message_.chat)
+    if chat_id in callsmusic.pytgcalls.active_calls:
         await res.edit("adding in queue")
-        position = await queues.put(message_.chat.id, file=file_path)       
-        qeue = que.get(message_.chat.id)
+        position = await queues.put(chat_id, file=file_path)
+        qeue = que.get(chat_id)
         s_name = title
         r_by = message_.from_user
         loc = file_path
@@ -631,9 +632,8 @@ async def deezer(client: Client, message_: Message):
         await res.edit_text(f"🎼 **Lagu yang Anda minta Sedang Antri di posisi** {position}")
     else:
         await res.edit_text(f"🎼️ **Sedang Memutar Lagu**")
-        chat_id = message_.chat.id
         que[chat_id] = []
-        qeue = que.get(message_.chat.id)
+        qeue = que.get(chat_id)
         s_name = title
         r_by = message_.from_user
         loc = file_path
@@ -747,9 +747,10 @@ async def jiosaavn(client: Client, message_: Message):
          ]
      )
     file_path= await converter.convert(wget.download(slink))
-    if message_.chat.id in callsmusic.pytgcalls.active_calls:
-        position = await queues.put(message_.chat.id, file=file_path)
-        qeue = que.get(message_.chat.id)
+    chat_id = get_chat_id(message_.chat)
+    if chat_id in callsmusic.pytgcalls.active_calls:
+        position = await queues.put(chat_id, file=file_path)
+        qeue = que.get(chat_id)
         s_name = sname
         r_by = message_.from_user
         loc = file_path
@@ -766,16 +767,15 @@ async def jiosaavn(client: Client, message_: Message):
            
     else:
         await res.edit_text("🎼️ **Sedang Memutar Lagu**")
-        chat_id = message_.chat.id
         que[chat_id] = []
-        qeue = que.get(message_.chat.id)
+        qeue = que.get(chat_id)
         s_name = sname
         r_by = message_.from_user
         loc = file_path
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
         try:
-            callsmusic.pytgcalls.join_group_call(message_.chat.id, file_path)
+            callsmusic.pytgcalls.join_group_call(chat_id, file_path)
         except:
             res.edit("Group call is not connected of I can't join it")
             return
