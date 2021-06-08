@@ -28,7 +28,7 @@ from helpers.filters import command, other_filters
 from helpers.gets import get_file_name
 from callsmusic import callsmusic, queues
 from callsmusic.callsmusic import client as USER
-from converter.converter import convert
+import converter
 from downloaders import youtube
 chat_id = None
 
