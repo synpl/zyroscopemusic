@@ -19,10 +19,6 @@
             "required": false,
             "value": ""
         },
-        "ARQ_API_KEY": {
-            "description": "Ambil api dari bot telegram » t.me/ARQRobot atau @ARQRobot",
-            "required": true
-        },
         "API_ID": {
             "description": "Masukan APP ID Silahkan Ambil dari my.telegram.org/apps",
             "required": true
@@ -38,7 +34,7 @@
         "DURATION_LIMIT": {
             "description": "Batas durasi audio maksimal untuk download (minutes)",
             "required": true,
-            "value": "7"
+            "value": "30"
         }
     },
     "buildpacks": [
