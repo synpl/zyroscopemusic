@@ -707,7 +707,7 @@ async def jiosaavn(client: Client, message_: Message):
         )
         return     
     requested_by = message_.from_user.first_name
-    chat_id=message_.chat.id
+    chat_id = message_.chat.id
     text = message_.text.split(" ", 1)
     query = text[1]
     res = lel
@@ -717,11 +717,11 @@ async def jiosaavn(client: Client, message_: Message):
         if not songs.ok:
             await message_.reply_text(songs.result)
             return
-        sname = r[0]["song"]
-        slink = r[0]["media_url"]
-        ssingers = r[0]["singers"]
-        sthumb = r[0]["image"]
-        sduration = int(r[0]["duration"])
+        sname = songs.result[0].song
+        slink = songs.result[0].media_url
+        ssingers = songs.result[0].singers
+        sthumb = songs.result[0].image
+        sduration = int(songs.result[0].duration)
     except Exception as e:
         await res.edit(
             "**Tidak Ditemukan Lagu Apa Pun!**"
