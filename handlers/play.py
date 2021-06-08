@@ -132,7 +132,7 @@ async def playlist(client, message):
     by = temp[0][1].mention(style='md')
     msg = "**Lagu Yang Sedang dimainkan** di {}".format(message.chat.title)
     msg += "\n• "+ now_playing
-    msg += "\n• Req by "+by
+    msg += "\n• Atas permintaan "+by
     temp.pop(0)
     if temp:
         msg += '\n\n'
@@ -141,7 +141,7 @@ async def playlist(client, message):
             name = song[0]
             usr = song[1].mention(style='md')
             msg += f'\n• {name}'
-            msg += f'\n• Req by {usr}\n'
+            msg += f'\n• Atas permintaan {usr}\n'
     await message.reply_text(msg)       
     
 # ============================= Settings =========================================
@@ -155,7 +155,7 @@ def updated_stats(chat, queue, vol=100):
             stats += 'Volume: {}%\n'.format(vol)
             stats += 'Lagu dalam antrian: `{}`\n'.format(len(que))
             stats += 'Sedang memutar lagu: **{}**\n'.format(queue[0][0])
-            stats += 'Requested by: {}'.format(queue[0][1].mention)
+            stats += 'Atas permintaan: {}'.format(queue[0][1].mention)
     else:
         stats = None
     return stats
@@ -238,7 +238,7 @@ async def p_cb(b, cb):
         by = temp[0][1].mention(style='md')
         msg = "**Lagu Yang Sedang dimainkan** di {}".format(cb.message.chat.title)
         msg += "\n• "+ now_playing
-        msg += "\n• Req by "+by
+        msg += "\n• Atas permintaan "+by
         temp.pop(0)
         if temp:
              msg += '\n\n'
@@ -247,7 +247,7 @@ async def p_cb(b, cb):
                  name = song[0]
                  usr = song[1].mention(style='md')
                  msg += f'\n• {name}'
-                 msg += f'\n• Req by {usr}\n'
+                 msg += f'\n• Atas permintaan {usr}\n'
         await cb.message.edit(msg)      
 
 @Client.on_callback_query(filters.regex(pattern=r'^(play|pause|skip|leave|puse|resume|menu|cls)$'))
@@ -298,7 +298,7 @@ async def m_cb(b, cb):
         by = temp[0][1].mention(style='md')
         msg = "**Lagu Yang Sedang dimainkan** di {}".format(cb.message.chat.title)
         msg += "\n• "+ now_playing
-        msg += "\n• Req by "+by
+        msg += "\n• Atas permintaan "+by
         temp.pop(0)
         if temp:
              msg += '\n\n'
@@ -307,7 +307,7 @@ async def m_cb(b, cb):
                  name = song[0]
                  usr = song[1].mention(style='md')
                  msg += f'\n• {name}'
-                 msg += f'\n• Req by {usr}\n'
+                 msg += f'\n• Atas permintaan {usr}\n'
         await cb.message.edit(msg)      
                       
     elif type_ == 'resume':     
