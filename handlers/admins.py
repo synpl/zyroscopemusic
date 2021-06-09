@@ -14,7 +14,7 @@ from helpers.filters import command, other_filters
 from helpers.decorators import errors, authorized_users_only
 from config import que, admins as a
 
-@Client.on_message(filters.command('reload'))
+@Client.on_message(filters.command("reload"))
 async def update_admin(client, message):
     global a
     admins = await client.get_chat_members(message.chat.id, filter="administrators")
@@ -22,7 +22,7 @@ async def update_admin(client, message):
     for u in admins:
         new_ads.append(u.user.id)
     a[message.chat.id] = new_ads
-    await message.reply_text('✅ Bot berhasil di mulai ulang \n✅ Daftar admin telah di perbarui')
+    await message.reply_text("✅ Bot berhasil di mulai ulang \n✅ Daftar admin telah di perbarui")
 
 
 @Client.on_message(command("pause") & other_filters)
@@ -32,7 +32,7 @@ async def pause(_, message: Message):
     if (
             message.chat.id not in callsmusic.pytgcalls.active_calls
     ) or (
-            callsmusic.pytgcalls.active_calls[message.chat.id] == 'paused'
+            callsmusic.pytgcalls.active_calls[message.chat.id] == "paused"
     ):
         await message.reply_text("❗ **Tidak ada Lagu yang sedang diputar!**")
     else:
@@ -47,7 +47,7 @@ async def resume(_, message: Message):
     if (
             message.chat.id not in callsmusic.pytgcalls.active_calls
     ) or (
-            callsmusic.pytgcalls.active_calls[message.chat.id] == 'playing'
+            callsmusic.pytgcalls.active_calls[message.chat.id] == "playing"
     ):
         await message.reply_text("❗ **Tidak ada Lagu yang sedang dijeda!**")
     else:
@@ -95,7 +95,7 @@ async def skip(_, message: Message):
         skip = qeue.pop(0)
     if not qeue:
         return
-    await message.reply_text(f'• Skipped **{skip[0]}**\n• Now Playing **{qeue[0][0]}**')
+    await message.reply_text(f"• Skipped **{skip[0]}**\n• Now Playing **{qeue[0][0]}**")
 
 
 @Client.on_message(
