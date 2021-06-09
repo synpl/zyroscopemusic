@@ -69,7 +69,7 @@ async def start(client: Client, message: Message):
 async def help(client: Client, message: Message):
     await message.reply_text(
         f"""<b>Hi {message.from_user.first_name}!
-\n/play <nama lagu>  - Untuk Memutar lagu yang Anda minta melalui YouTube
+\n/play <nama lagu> - Untuk Memutar lagu yang Anda minta melalui YouTube
 /playlist - Untuk Menampilkan daftar putar Lagu sekarang
 /current - Untuk Menunjukkan  Lagu sekarang yang sedang diputar
 /song <nama lagu> - Untuk Mendownload lagu dari YouTube 
