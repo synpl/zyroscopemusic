@@ -22,7 +22,7 @@ async def update_admin(client, message):
     for u in admins:
         new_ads.append(u.user.id)
     a[message.chat.id] = new_ads
-    await message.reply_text("✅ Bot berhasil di mulai ulang \n✅ Daftar admin telah di perbarui")
+    await client.send_message("✅ Bot berhasil di mulai ulang \n✅ Daftar admin telah di perbarui")
 
 
 @Client.on_message(command("pause") & other_filters)
