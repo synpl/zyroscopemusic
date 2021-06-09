@@ -82,7 +82,7 @@ async def help(client: Client, message: Message):
 /skip - Untuk Menskip pemutaran lagu ke Lagu berikutnya
 /end - Untuk Memberhentikan pemutaran Lagu
 /userbotjoin - Untuk Mengundang asisten ke obrolan Anda
-/admincache - Untuk Merefresh admin list
+/reload - Untuk Merefresh admin list
  </b>""",
         reply_markup=InlineKeyboardMarkup(
             [
