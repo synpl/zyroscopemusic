@@ -97,3 +97,12 @@ async def help(client: Client, message: Message):
             ]
         )
     )
+
+
+@Client.on_message(
+    filters.command("reload")
+    & filters.group
+    & ~ filters.edited
+)
+async def reload(client: Client, message: Message):
+    await message.reply_text("✅ Bot berhasil di mulai ulang \n✅ Daftar admin telah di perbarui")
