@@ -476,9 +476,10 @@ async def play(_, message: Message):
         appendable = [s_name, r_by, loc]
         qeue.append(appendable)
         await message.reply_photo(
-        photo="final.png", 
-        caption=f"🎼 **Lagu yang Anda minta Sedang Antri di posisi** `{position}`!",
-        reply_markup=keyboard)
+        photo = "final.png", 
+        caption = f"🏷 **Judul:** [{title[:60]}]({url})\n⏱ **Durasi:** {duration}\n💡 **Status:** `Antrian ke {position}`\n" \
+                + f"🎧 **Atas permintaan** {message.from_user.mention}",
+        reply_markup = keyboard)
         os.remove("final.png")
         return await lel.delete()
     else:
@@ -492,12 +493,10 @@ async def play(_, message: Message):
         qeue.append(appendable)
         callsmusic.pytgcalls.join_group_call(message.chat.id, file_path)
         await message.reply_photo(
-        photo="final.png",
-        reply_markup=keyboard,
-        caption="🎼️ **Sedang Memutar Lagu Permintaan dari** {}".format(
-        message.from_user.mention()
-        ),
-    )
+        photo = "final.png",
+        caption = f"🏷 **Judul:** [{title[:60]}]({url})\n⏱ **Durasi:** {duration}\n💡 **Status:** `Sedang Memutar`\n" \
+                + f"🎧 **Atas permintaan:** {message.from_user.mention}",
+        reply_markup = keyboard)
         os.remove("final.png")
         return await lel.delete()
 
