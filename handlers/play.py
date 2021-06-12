@@ -477,7 +477,7 @@ async def play(_, message: Message):
         qeue.append(appendable)
         await message.reply_photo(
         photo = "final.png", 
-        caption = f"🏷 **Judul:** [{title[:60]}]({url})\n⏱ **Durasi:** {duration}\n💡 **Status:** `Antrian ke {position}`\n" \
+        caption = f"🏷 **Judul:** [{title[:60]}]({url})\n⏱ **Durasi:** `{duration}`\n💡 **Status:** `Antrian ke {position}`\n" \
                 + f"🎧 **Atas permintaan** {message.from_user.mention}",
         reply_markup = keyboard)
         os.remove("final.png")
@@ -494,7 +494,7 @@ async def play(_, message: Message):
         callsmusic.pytgcalls.join_group_call(message.chat.id, file_path)
         await message.reply_photo(
         photo = "final.png",
-        caption = f"🏷 **Judul:** [{title[:60]}]({url})\n⏱ **Durasi:** {duration}\n💡 **Status:** `Sedang Memutar`\n" \
+        caption = f"🏷 **Judul:** [{title[:60]}]({url})\n⏱ **Durasi:** `{duration}`\n💡 **Status:** `Sedang Memutar`\n" \
                 + f"🎧 **Atas permintaan:** {message.from_user.mention}",
         reply_markup = keyboard)
         os.remove("final.png")
