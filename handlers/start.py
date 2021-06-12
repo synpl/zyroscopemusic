@@ -105,4 +105,4 @@ async def help(client: Client, message: Message):
     & ~ filters.edited
 )
 async def reload(client: Client, message: Message):
-    await message.reply_text("✅ Bot berhasil di mulai ulang \n✅ Daftar admin telah di perbarui")
+    await message.reply_text("✅ Bot **berhasil dimulai ulang!**\n\n• **Daftar admin** telah **diperbarui.**")
