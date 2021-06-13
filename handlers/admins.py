@@ -14,7 +14,9 @@ from helpers.filters import command, other_filters
 from helpers.decorators import errors, authorized_users_only
 from config import que, admins as a
 
-@Client.on_message(filters.command("adminreset"))
+@Client.on_message(command("reload") & other_filters)
+@errors
+@authorized_users_only
 async def update_admin(client, message):
     global a
     admins = await client.get_chat_members(message.chat.id, filter="administrators")
@@ -22,7 +24,7 @@ async def update_admin(client, message):
     for u in admins:
         new_ads.append(u.user.id)
     a[message.chat.id] = new_ads
-    await message.reply_text("Sucessfully updated admin list in **{}**".format(message.chat.title))
+    await message.reply_text("✅ Bot **berhasil dimulai ulang!**\n\n• **Daftar admin** telah **diperbarui.**")
 
 
 @Client.on_message(command("pause") & other_filters)
@@ -88,7 +90,6 @@ async def skip(_, message: Message):
                 message.chat.id,
                 callsmusic.queues.get(message.chat.id)["file"]
             )
-                
 
     qeue = que.get(message.chat.id)
     if qeue:
@@ -96,12 +97,3 @@ async def skip(_, message: Message):
     if not qeue:
         return
     await message.reply_text(f"• Skipped **{skip[0]}**\n• Now Playing **{qeue[0][0]}**")
-
-
-@Client.on_message(
-    filters.command("gdluadmincache")
-)
-@errors
-async def admincache(client, message: Message):
-    set(message.chat.id, [member.user for member in await message.chat.get_members(filter="administrators")])
-    #await message.reply_text("✅ Bot berhasil di mulai ulang \n✅ Daftar admin telah di perbarui")
