@@ -10,17 +10,16 @@ async def start_(client: Client, message: Message):
     await message.reply_text(
         f"""<b>┗┓ Hi {message.from_user.first_name} My Name is TD Music Bot ┏┛\n
 Saya Bot Music Group, Yang dapat Memutar Lagu di Voice Chat Group Dengan cara yang Mudah
-Saya Memiliki Banyak Fitur Praktis Seperti :
+Saya Memiliki Banyak Fitur Praktis Seperti:
 ┏━━━━━━━━━━━━━━
 ┣• Memutar Musik.
 ┣• Mendownload Lagu.
 ┣• Mencari Lagu Yang ingin di Putar atau di Download.
 ┗━━━━━━━━━━━━━━
-❃ Managed With ☕️ By : [Tofik Denianto](https://t.me/tofik_dn)
+❃ Managed With ☕️ By: [Tofik Denianto](https://t.me/tofik_dn)
 ━━━━━━━━━━━━━━━
 Ketik » /help « Untuk Melihat Daftar Perintah!
 </b>""",
-
         reply_markup=InlineKeyboardMarkup(
             [ 
                 [
@@ -97,12 +96,3 @@ async def help(client: Client, message: Message):
             ]
         )
     )
-
-
-@Client.on_message(
-    filters.command("reload")
-    & filters.group
-    & ~ filters.edited
-)
-async def reload(client: Client, message: Message):
-    await message.reply_text("✅ Bot **berhasil dimulai ulang!**\n\n• **Daftar admin** telah **diperbarui.**")
