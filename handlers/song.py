@@ -246,16 +246,16 @@ def time_to_seconds(time):
 async def ytmusic(client,message: Message):
     global is_downloading
     if is_downloading:
-        await message.reply_text("Downloadan yang lain sedang berlangsung, coba lagi nanti.")
+        await message.reply_text("**Downloadan yang lain sedang berlangsung, coba lagi nanti.**")
         return
 
     urlissed = get_text(message)
 
     pablo =  await client.send_message(
             message.chat.id,
-            f"`Mendapatkan {urlissed} Dari Youtube. Tunggu Sebentar.`")
+            f"`**Mendapatkan {urlissed} Dari Youtube. Tunggu Sebentar.**`")
     if not urlissed:
-        await pablo.edit("Sintaks Perintah Tidak Valid, Silakan ketik `/help` Untuk Mengetahui Lebih Lanjut!")
+        await pablo.edit("**Sintaks Perintah Tidak Valid, Silakan ketik `/help` Untuk Mengetahui Lebih Lanjut!**")
         return
     
     search = SearchVideos(f"{urlissed}", offset=1, mode="dict", max_results=1)
@@ -291,7 +291,7 @@ async def ytmusic(client,message: Message):
 
             if duration > DURATION_LIMIT:
                 await pablo.edit(
-                    f"❌ Video berdurasi lebih dari {DURATION_LIMIT} minute(s) tidak diperbolehkan, video yang ingin kamu download {duration} minute(s)"
+                    f"**❌ Video berdurasi lebih dari {DURATION_LIMIT} minute(s) tidak diperbolehkan, video yang ingin kamu download {duration} minute(s)**"
                 )
                 is_downloading = False
                 return
