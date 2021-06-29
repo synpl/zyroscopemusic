@@ -34,7 +34,7 @@
         "DURATION_LIMIT": {
             "description": "Batas durasi audio maksimal untuk download (minutes)",
             "required": true,
-            "value": "10"
+            "value": "60"
         }
     },
     "buildpacks": [
