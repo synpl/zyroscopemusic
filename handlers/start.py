@@ -8,7 +8,6 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
     & ~ filters.edited
 )
 async def start_(client: Client, message: Message):
-user = await tede.get_me()
     await message.reply_text(
         f"""<b>┗┓ Hi {message.from_user.first_name} My Name is TD Music Bot ┏┛\n
 Saya Bot Music Group, Yang dapat Memutar Lagu di Voice Chat Group Dengan cara yang Mudah
