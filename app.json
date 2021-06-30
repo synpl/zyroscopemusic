@@ -23,6 +23,10 @@
             "required": false,
             "value": ""
         },
+        "ASSISTANT_NAME": {
+            "description": "Your assistant username without @",
+            "required": true
+        },
         "API_ID": {
             "description": "Masukan APP ID Silahkan Ambil dari my.telegram.org/apps",
             "required": true
