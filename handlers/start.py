@@ -1,3 +1,4 @@
+from callsmusic.callsmusic import client as tede
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -7,6 +8,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
     & ~ filters.edited
 )
 async def start_(client: Client, message: Message):
+user = await tede.get_me()
     await message.reply_text(
         f"""<b>┗┓ Hi {message.from_user.first_name} My Name is TD Music Bot ┏┛\n
 Saya Bot Music Group, Yang dapat Memutar Lagu di Voice Chat Group Dengan cara yang Mudah
@@ -16,7 +18,7 @@ Saya Memiliki Banyak Fitur Praktis Seperti:
 ┣• Mendownload Lagu.
 ┣• Mencari Lagu Yang ingin di Putar atau di Download.
 ┗━━━━━━━━━━━━━━
-❃ Managed With ☕️ By: [Tofik Denianto](https://t.me/tofik_dn)
+❃ Managed With ❤ By: [Tofik Denianto](https://t.me/tofik_dn)
 ━━━━━━━━━━━━━━━
 Ketik » /help « Untuk Melihat Daftar Perintah!
 </b>""",
@@ -24,10 +26,10 @@ Ketik » /help « Untuk Melihat Daftar Perintah!
             [ 
                 [
                     InlineKeyboardButton(
-                        "➕ Tambahkan Ke Group ➕", url="https://t.me/tofikdnbot?startgroup=true")
+                        "➕ Tambahkan Ke Group ➕", url="t.me/{}?startgroup=true".format(context.bot.username))
                   ],[
                     InlineKeyboardButton(
-                         "🤖 Assistant", url="https://t.me/tdassistant"
+                         "🤖 Assistant", url=f"https://t.me/{tede.username}"
                     ),
                     InlineKeyboardButton(
                         "📷 My Instagram", url="https://www.instagram.com/tofik_dn"
@@ -72,9 +74,9 @@ async def help(client: Client, message: Message):
 /playlist - Untuk Menampilkan daftar putar Lagu sekarang
 /current - Untuk Menunjukkan  Lagu sekarang yang sedang diputar
 /song <nama lagu> - Untuk Mendownload lagu dari YouTube 
-/search <nama lagu> - Untuk Mencari Video di YouTube dengan detail
-/video <nama lagu> - Untuk Mendownload Video di YouTube dengan detail
-\n*Admins Only*
+/search <nama video> - Untuk Mencari Video di YouTube dengan detail
+/video <nama video> - Untuk Mendownload Video di YouTube dengan detail
+\n**Admins Only:**
 /player - Open music player settings panel
 /pause - Untuk Menjeda pemutaran Lagu
 /resume - Untuk Melanjutkan pemutaran Lagu yang di pause
