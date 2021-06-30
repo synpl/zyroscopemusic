@@ -14,8 +14,12 @@
             "description": "Masukan Bot Token dari @BotFather",
             "required": true
         },
+        "BOT_USERNAME": {
+            "description": "Your bot's username without @",
+            "required": true
+        },
         "BOT_NAME": {
-            "description": "Masukan Nama Bot MusicPlayer Mu. (isi bebas)",
+            "description": "Your MusicPlayer Bot Name.",
             "required": false,
             "value": ""
         },
