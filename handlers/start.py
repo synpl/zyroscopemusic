@@ -1,4 +1,5 @@
 from callsmusic.callsmusic import client as tede
+from config import BOT_USERNAME
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -25,7 +26,7 @@ Ketik » /help « Untuk Melihat Daftar Perintah!
             [ 
                 [
                     InlineKeyboardButton(
-                        "➕ Tambahkan Ke Group ➕", url="t.me/{}?startgroup=true".format(context.bot.username))
+                        "➕ Tambahkan Ke Group ➕", url=f"https://t.me/{BOT_USERNAME}?startgroup=true")
                   ],[
                     InlineKeyboardButton(
                          "🤖 Assistant", url=f"https://t.me/{tede.username}"
@@ -69,12 +70,12 @@ async def start(client: Client, message: Message):
 async def help(client: Client, message: Message):
     await message.reply_text(
         f"""<b>Hi {message.from_user.first_name}!
-\n/play <nama lagu> - Untuk Memutar lagu yang Anda minta melalui YouTube
+\n/play (judul lagu) - Untuk Memutar lagu yang Anda minta melalui YouTube
 /playlist - Untuk Menampilkan daftar putar Lagu sekarang
 /current - Untuk Menunjukkan  Lagu sekarang yang sedang diputar
-/song <nama lagu> - Untuk Mendownload lagu dari YouTube 
-/search <nama video> - Untuk Mencari Video di YouTube dengan detail
-/video <nama video> - Untuk Mendownload Video di YouTube dengan detail
+/song (judul lagu) - Untuk Mendownload lagu dari YouTube 
+/search (judul video) - Untuk Mencari Video di YouTube dengan detail
+/video (judul video) - Untuk Mendownload Video di YouTube dengan detail
 \n**Admins Only:**
 /player - Open music player settings panel
 /pause - Untuk Menjeda pemutaran Lagu
