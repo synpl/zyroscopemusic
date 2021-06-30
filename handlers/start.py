@@ -1,5 +1,4 @@
-from callsmusic.callsmusic import client as tede
-from config import BOT_USERNAME
+from config import BOT_USERNAME, BOT_NAME, ASSISTANT_NAME
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -10,7 +9,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 )
 async def start_(client: Client, message: Message):
     await message.reply_text(
-        f"""<b>┗┓ Hi {message.from_user.first_name} My Name is TD Music Bot ┏┛\n
+        f"""<b>┗┓ Hi {message.from_user.first_name} My Name is {BOT_NAME} ┏┛\n
 Saya Bot Music Group, Yang dapat Memutar Lagu di Voice Chat Group Dengan cara yang Mudah
 Saya Memiliki Banyak Fitur Praktis Seperti:
 ┏━━━━━━━━━━━━━━
@@ -29,7 +28,7 @@ Ketik » /help « Untuk Melihat Daftar Perintah!
                         "➕ Tambahkan Ke Group ➕", url=f"https://t.me/{BOT_USERNAME}?startgroup=true")
                   ],[
                     InlineKeyboardButton(
-                         "🤖 Assistant", url=f"https://t.me/{tede.username}"
+                         "🤖 Assistant", url=f"https://t.me/{ASSISTANT_NAME}"
                     ),
                     InlineKeyboardButton(
                         "📷 My Instagram", url="https://www.instagram.com/tofik_dn"
