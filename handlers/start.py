@@ -91,7 +91,7 @@ async def help(client: Client, message: Message):
                         "Owner", url="https://t.me/tofik_dn"
                     ),
                     InlineKeyboardButton(
-                        "Project Man", url="https://t.me/Lunatic0de"
+                        "Tede", url="https://t.me/tdtapibot"
                     )
                 ]
             ]
