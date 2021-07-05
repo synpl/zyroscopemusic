@@ -29,7 +29,7 @@ async def _human_time_duration(seconds):
 
 
 @Client.on_message(
-    filters.command("ping")
+    command("ping")
     & ~ filters.edited
 )
 async def ping_pong(client: Client, m: Message):
@@ -39,12 +39,12 @@ async def ping_pong(client: Client, m: Message):
     delta_ping = time() - start
     await m_reply.edit_text(
         f"{emoji.PING_PONG} **PONG!!**\n"
-        f"**Time Taken:** `{delta_ping * 1000:.3f} ms`"
+        f"`{delta_ping * 1000:.3f} ms`"
     )
 
 
 @Client.on_message(
-    filters.command("uptime")
+    command("uptime")
     & ~ filters.edited
 )
 async def get_uptime(client: Client, m: Message):
