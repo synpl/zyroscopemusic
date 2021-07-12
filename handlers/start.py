@@ -1,4 +1,4 @@
-from .ping import *
+from .ping import current_time, uptime_sec, uptime
 from config import BOT_USERNAME, BOT_NAME, ASSISTANT_NAME
 from helpers.filters import command
 from pyrogram import Client, filters
