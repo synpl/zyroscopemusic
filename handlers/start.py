@@ -1,12 +1,9 @@
 from config import BOT_USERNAME, BOT_NAME, ASSISTANT_NAME
+from helpers.filters import command
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
-@Client.on_message(
-    filters.command("start")
-    & filters.private
-    & ~ filters.edited
-)
+@Client.on_message(command("start") & filters.private & ~filters.edited)
 async def start_(client: Client, message: Message):
     await message.reply_text(
         f"""<b>┗┓ Hi {message.from_user.first_name} My Name is {BOT_NAME} ┏┛\n
@@ -39,11 +36,7 @@ Ketik » /help « Untuk Melihat Daftar Perintah!
      disable_web_page_preview=False
     )
 
-@Client.on_message(
-    filters.command(["start", "start@{BOT_USERNAME}"])
-    & filters.group
-    & ~ filters.edited
-)
+@Client.on_message(command(["start", "start@{BOT_USERNAME}"]) & filters.group & ~filters.edited)
 async def start(client: Client, message: Message):
     await message.reply_text(
         "💁🏻‍♂️ **Apakah Anda ingin mencari Link YouTube?**",
@@ -61,11 +54,7 @@ async def start(client: Client, message: Message):
         )
     )
 
-@Client.on_message(
-    filters.command("help")
-    & filters.private
-    & ~ filters.edited
-)
+@Client.on_message(command("help") & filters.private & ~filters.edited)
 async def help(client: Client, message: Message):
     await message.reply_text(
         f"""<b>Hi {message.from_user.first_name}!
@@ -83,4 +72,4 @@ async def help(client: Client, message: Message):
 /end - Untuk Memberhentikan pemutaran Lagu
 /userbotjoin - Untuk Mengundang asisten ke obrolan Anda
 /reload - Untuk Merefresh admin list
- </b>""",
+ </b>"""
