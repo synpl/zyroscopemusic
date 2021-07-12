@@ -1,4 +1,4 @@
-from .ping import START_TIME_ISO as tedeuptime
+from .ping import uptime as tedeuptime
 from config import BOT_USERNAME, BOT_NAME, ASSISTANT_NAME
 from helpers.filters import command
 from pyrogram import Client, filters
@@ -15,8 +15,6 @@ Saya Memiliki Banyak Fitur Praktis Seperti:
 ┣• Mendownload Lagu.
 ┣• Mencari Lagu Yang ingin di Putar atau di Download.
 ┗━━━━━━━━━━━━━━
-❃ Managed With ❤ By: [Tofik Denianto](https://t.me/tofik_dn)
-━━━━━━━━━━━━━━━
 Ketik » /help « Untuk Melihat Daftar Perintah!
 </b>""",
         reply_markup=InlineKeyboardMarkup(
@@ -34,7 +32,7 @@ Ketik » /help « Untuk Melihat Daftar Perintah!
                 ]
             ]
         ),
-     disable_web_page_preview=False
+     disable_web_page_preview=True
     )
 
 @Client.on_message(command(["start", "start@{BOT_USERNAME}"]) & filters.group & ~filters.edited)
