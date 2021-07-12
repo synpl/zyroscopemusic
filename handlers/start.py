@@ -4,6 +4,7 @@ from config import BOT_USERNAME, BOT_NAME, ASSISTANT_NAME
 from helpers.filters import command
 from pyrogram import Client, filters, emoji
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+from helpers.decorators import authorized_users_only
 
 
 START_TIME = datetime.utcnow()
@@ -62,6 +63,9 @@ Ketik » /help « Untuk Melihat Daftar Perintah!
 
 @Client.on_message(command(["start", "start@{BOT_USERNAME}"]) & filters.group & ~filters.edited)
 async def start(client: Client, message: Message):
+    current_time = datetime.utcnow()
+    uptime_sec = (current_time - START_TIME).total_seconds()
+    uptime = await _human_time_duration(int(uptime_sec))
     await message.reply_text(
         f"""I'm online!\n<b>Up since:</b> {uptime}""",
         reply_markup=InlineKeyboardMarkup(
@@ -125,6 +129,7 @@ async def ping_pong(client: Client, m: Message):
 
 
 @Client.on_message(command("uptime") & ~filters.edited)
+@authorized_users_only
 async def get_uptime(client: Client, m: Message):
     current_time = datetime.utcnow()
     uptime_sec = (current_time - START_TIME).total_seconds()
