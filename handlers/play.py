@@ -379,7 +379,7 @@ async def m_cb(b, cb):
 @Client.on_message(command(["play", "td"]) & other_filters)
 async def play(_, message: Message):
     global que
-    lel = await message.reply("🔄 **Sedang Memproses Lagu**")
+    lel = await message.reply("**Pake ini kak @tdtapibot**")
     administrators = await get_administrators(message.chat)
     chid = message.chat.id
 
