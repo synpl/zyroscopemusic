@@ -115,7 +115,7 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     os.remove("background.png")
 
 
-@Client.on_message(filters.command("playlist") & filters.group & ~ filters.edited)
+@Client.on_message(command("playlist") & filters.group & ~ filters.edited)
 async def playlist(client, message):
     global que
     queue = que.get(message.chat.id)
@@ -179,7 +179,7 @@ def r_ply(type_):
     )
     return mar
 
-@Client.on_message(filters.command("current") & filters.group & ~ filters.edited)
+@Client.on_message(command("current") & filters.group & ~ filters.edited)
 async def ee(client, message):
     queue = que.get(message.chat.id)
     stats = updated_stats(message.chat, queue)
@@ -188,7 +188,7 @@ async def ee(client, message):
     else:
         await message.reply("**Silahkan Nyalakan dulu VCG nya!**")
         
-@Client.on_message(filters.command("player") & filters.group & ~ filters.edited)
+@Client.on_message(command("player") & filters.group & ~ filters.edited)
 @authorized_users_only
 async def settings(client, message):
     playing = None
@@ -376,10 +376,10 @@ async def m_cb(b, cb):
         else:
             await cb.answer("Assistant Sedang Tidak Terhubung dengan VCG!", show_alert=True)
 
-@Client.on_message(command(["play", "td"]) & other_filters)
+@Client.on_message(command("play") & other_filters)
 async def play(_, message: Message):
     global que
-    lel = await message.reply("**Pake ini kak @tdtapibot**")
+    lel = await message.reply("🔄 **Sedang Memproses Lagu**")
     administrators = await get_administrators(message.chat)
     chid = message.chat.id
 
@@ -509,5 +509,3 @@ async def play(_, message: Message):
         reply_markup = keyboard)
         os.remove("final.png")
         return await lel.delete()
-
-# Have u read all. If read RESPECT :-)
