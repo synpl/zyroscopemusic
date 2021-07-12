@@ -1,21 +1,24 @@
 import os
+import sys
+import json
+import wget
+import ffmpeg
+import aiohttp
+import aiofiles
+import requests
+import traceback
+import converter
+import youtube_dl
 from os import path
 from pyrogram import Client, filters, emoji
-from pyrogram.types import Message, Voice
 from typing import Callable, Coroutine, Dict, List, Tuple, Union
 from callsmusic import callsmusic, queues
 from helpers.admins import get_administrators
-import requests
-import aiohttp
-import youtube_dl
 from youtube_search import YoutubeSearch
 from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
 from pyrogram.errors.exceptions.flood_420 import FloodWait
-import traceback
-import sys
 from callsmusic.callsmusic import client as USER
 from pyrogram.errors import UserAlreadyParticipant
-import converter
 from downloaders import youtube
 
 from config import que, DURATION_LIMIT, BOT_NAME as bn
@@ -23,14 +26,10 @@ from helpers.filters import command, other_filters
 from helpers.decorators import errors, authorized_users_only
 from helpers.errors import DurationLimitError
 from helpers.gets import get_url, get_file_name
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, Message, Voice
 from cache.admins import admins as a
-import aiofiles
-import ffmpeg
 from PIL import Image, ImageFont, ImageDraw
 from Python_ARQ import ARQ
-import json
-import wget
 chat_id = None
 
 
@@ -132,7 +131,6 @@ async def playlist(client, message):
     await message.reply_text(msg)       
     
 # ============================= Settings =========================================
-
 def updated_stats(chat, queue, vol=100):
     if chat.id in callsmusic.pytgcalls.active_calls:
     #if chat.id in active_chats:
@@ -250,7 +248,6 @@ async def m_cb(b, cb):
             await cb.answer("Music Paused!")
             await cb.message.edit(updated_stats(m_chat, qeue), reply_markup=r_ply("play"))
                 
-
     elif type_ == "play":       
         if (
             chat_id not in callsmusic.pytgcalls.active_calls
@@ -262,7 +259,6 @@ async def m_cb(b, cb):
             callsmusic.pytgcalls.resume_stream(chat_id)
             await cb.answer("Music Resumed!")
             await cb.message.edit(updated_stats(m_chat, qeue), reply_markup=r_ply("pause"))
-                     
 
     elif type_ == "playlist":
         queue = que.get(cb.message.chat.id)
@@ -333,7 +329,8 @@ async def m_cb(b, cb):
                 ]        
             ]
         )
-        await cb.message.edit(stats, reply_markup=marr) 
+        await cb.message.edit(stats, reply_markup=marr)
+
     elif type_ == "skip":        
         if qeue:
             skip = qeue.pop(0)
@@ -352,10 +349,9 @@ async def m_cb(b, cb):
                     callsmusic.queues.get(chat_id)["file"]
                 )
                 await cb.answer("Skipped")
-                await cb.message.edit((m_chat, qeue), reply_markup=r_ply(the_data))
-                await cb.message.reply_text(f"• Skipped track\n• Now Playing **{qeue[0][0]}**")
+                await cb.message.edit(f"• Skipped **{skip[0]}**\n• Now Playing **{qeue[0][0]}**")
 
-    else:      
+    elif type_ == "leave":
         if chat_id in callsmusic.pytgcalls.active_calls:
             try:
                 callsmusic.queues.clear(chat_id)
@@ -363,7 +359,7 @@ async def m_cb(b, cb):
                 pass
 
             callsmusic.pytgcalls.leave_group_call(chat_id)
-            await cb.message.edit("Berhasil Keluar dari Group!")
+            await cb.message.edit("❌ **Memberhentikan Lagu!**")
         else:
             await cb.answer("Assistant Sedang Tidak Terhubung dengan VCG!", show_alert=True)
 
