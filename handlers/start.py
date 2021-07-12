@@ -1,3 +1,4 @@
+from .ping import START_TIME_ISO as tedeuptime
 from config import BOT_USERNAME, BOT_NAME, ASSISTANT_NAME
 from helpers.filters import command
 from pyrogram import Client, filters
@@ -28,7 +29,7 @@ Ketik » /help « Untuk Melihat Daftar Perintah!
                          "🤖 Assistant", url=f"https://t.me/{ASSISTANT_NAME}"
                     ),
                     InlineKeyboardButton(
-                        "📷 My Instagram", url="https://www.instagram.com/tofik_dn"
+                        "🛠 Repo", url="https://github.com/tofikdn/TDMusicBot"
                     )
                 ]
             ]
@@ -39,15 +40,15 @@ Ketik » /help « Untuk Melihat Daftar Perintah!
 @Client.on_message(command(["start", "start@{BOT_USERNAME}"]) & filters.group & ~filters.edited)
 async def start(client: Client, message: Message):
     await message.reply_text(
-        "💁🏻‍♂️ **Apakah Anda ingin mencari Link YouTube?**",
+        f"""I'm online!\n<b>Up since:</b> {tedeuptime}""",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        "✅ Ya", switch_inline_query_current_chat=""
+                        "🛠 Repo", url="https://github.com/tofikdn/TDMusicBot"
                     ),
                     InlineKeyboardButton(
-                        "❌ Tidak", callback_data="close"
+                        "💬 Group", url="https://t.me/tedesupport"
                     )
                 ]
             ]
@@ -72,4 +73,17 @@ async def help(client: Client, message: Message):
 /end - Untuk Memberhentikan pemutaran Lagu
 /userbotjoin - Untuk Mengundang asisten ke obrolan Anda
 /reload - Untuk Merefresh admin list
- </b>"""
+</b>""",
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        "Group", url="https://t.me/tedesupport"
+                    ),
+                    InlineKeyboardButton(
+                        "Tede", url="https://t.me/tdtapibot"
+                    )
+                ]
+            ]
+        )
+    )
