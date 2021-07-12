@@ -1,6 +1,7 @@
 pyrogram
 TgCrypto
 py-tgcalls
+pytgcalls
 python-dotenv
 youtube_dl
 youtube_search_python
@@ -18,3 +19,4 @@ psutil
 wget
 regex
 html2text
+wheel
