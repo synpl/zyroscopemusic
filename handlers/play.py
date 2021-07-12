@@ -10,6 +10,7 @@ import traceback
 import converter
 import youtube_dl
 from os import path
+from asyncio.queues import QueueEmpty
 from pyrogram import Client, filters, emoji
 from typing import Callable, Coroutine, Dict, List, Tuple, Union
 from callsmusic import callsmusic, queues
@@ -29,7 +30,6 @@ from helpers.gets import get_url, get_file_name
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, Message, Voice
 from cache.admins import admins as a
 from PIL import Image, ImageFont, ImageDraw
-from Python_ARQ import ARQ
 chat_id = None
 
 
@@ -105,7 +105,7 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     os.remove("background.png")
 
 
-@Client.on_message(command("playlist") & filters.group & ~ filters.edited)
+@Client.on_message(command("playlist") & filters.group & ~filters.edited)
 async def playlist(client, message):
     global que
     queue = que.get(message.chat.id)
@@ -133,7 +133,6 @@ async def playlist(client, message):
 # ============================= Settings =========================================
 def updated_stats(chat, queue, vol=100):
     if chat.id in callsmusic.pytgcalls.active_calls:
-    #if chat.id in active_chats:
         stats = "Pengaturan dari **{}**".format(chat.title)
         if len(que) > 0:
             stats += "\n\n"
@@ -168,7 +167,7 @@ def r_ply(type_):
     )
     return mar
 
-@Client.on_message(command("current") & filters.group & ~ filters.edited)
+@Client.on_message(command("current") & filters.group & ~filters.edited)
 async def ee(client, message):
     queue = que.get(message.chat.id)
     stats = updated_stats(message.chat, queue)
@@ -177,7 +176,7 @@ async def ee(client, message):
     else:
         await message.reply("**Silahkan Nyalakan dulu VCG nya!**")
         
-@Client.on_message(command("player") & filters.group & ~ filters.edited)
+@Client.on_message(command("player") & filters.group & ~filters.edited)
 @authorized_users_only
 async def settings(client, message):
     playing = None
@@ -292,7 +291,8 @@ async def m_cb(b, cb):
                 await cb.answer("Obrolan tidak terhubung atau sudah dimainkan", show_alert=True)
         else:
             callsmusic.pytgcalls.resume_stream(chat_id)
-            await cb.answer("Music Resumed!")     
+            await cb.answer("Music Resumed!")
+     
     elif type_ == "puse":         
         if (
             chat_id not in callsmusic.pytgcalls.active_calls
@@ -304,6 +304,7 @@ async def m_cb(b, cb):
             callsmusic.pytgcalls.pause_stream(chat_id)
             
             await cb.answer("Music Paused!")
+
     elif type_ == "cls":          
         await cb.answer("Closed menu")
         await cb.message.delete()       
@@ -369,15 +370,12 @@ async def play(_, message: Message):
     lel = await message.reply("🔄 **Sedang Memproses Lagu**")
     administrators = await get_administrators(message.chat)
     chid = message.chat.id
-
     try:
         user = await USER.get_me()
     except:
-        user.first_name = "@tdassistant"
     usar = user
     wew = usar.id
     try:
-        #chatdetails = await USER.get_chat(chid)
         lmoa = await _.get_chat_member(chid, wew)
     except:
            for administrator in administrators:
@@ -386,32 +384,30 @@ async def play(_, message: Message):
                               invitelink = await _.export_chat_invite_link(chid)
                           except:
                               await lel.edit(
-                                  "<b>Tambahkan saya sebagai admin group Anda terlebih dahulu</b>",
+                                  "<b>Tambahkan saya sebagai admin group Anda terlebih dahulu.</b>",
                               )
                               return
 
                           try:
                               await USER.join_chat(invitelink)
-                              await USER.send_message(message.chat.id,"Saya bergabung dengan group ini untuk memainkan musik di VCG")
+                              await USER.send_message(message.chat.id,"Saya bergabung dengan group ini untuk memainkan musik di VCG.")
                               await lel.edit(
-                                  "<b>Assistant Bot berhasil bergabung dengan Group anda</b>",
+                                  "<b>{user.first_name} berhasil bergabung dengan Group anda</b>",
                               )
 
                           except UserAlreadyParticipant:
                               pass
                           except Exception as e:
-                              #print(e)
                               await lel.edit(
-                                  f"<b>🔴 Flood Wait Error 🔴 \nAssistant Bot tidak dapat bergabung dengan group Anda karena banyaknya permintaan bergabung untuk userbot! Pastikan pengguna tidak dibanned dalam group."
-                                  "\n\nAtau tambahkan Assistant Bot secara manual ke Group Anda dan coba lagi</b>",
+                                  f"<b>🔴 Flood Wait Error 🔴 \n{user.first_name} tidak dapat bergabung dengan group Anda karena banyaknya permintaan bergabung untuk userbot! Pastikan pengguna tidak dibanned dalam group."
+                        f"\n\nAtau tambahkan @{user.username} Bot secara manual ke Group Anda dan coba lagi.</b>",
                               )
                               pass
     try:
         chatdetails = await USER.get_chat(chid)
-        #lmoa = await client.get_chat_member(chid, wew)
     except:
         await lel.edit(
-            f"<i>Assistant Bot terkena banned dari Group ini, Minta admin untuk unbanned assistant bot lalu tambahkan Assistant Bot secara manual</i>"
+            f"<i>{user.first_name} terkena banned dari Group ini, Minta admin untuk unban @{user.username} secara manual, Lalu coba play lagi.</i>"
         )
         return     
     sender_id = message.from_user.id
@@ -432,7 +428,6 @@ async def play(_, message: Message):
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
         url = f"https://www.youtube.com{results[0]['url_suffix']}"
-        #print(results)
         title = results[0]["title"][:40]       
         thumbnail = results[0]["thumbnails"][0]
         thumb_name = f"thumb{title}.jpg"
@@ -476,7 +471,8 @@ async def play(_, message: Message):
         photo = "final.png", 
         caption = f"🏷 **Judul:** [{title[:60]}]({url})\n⏱ **Durasi:** `{duration}`\n💡 **Status:** `Antrian ke {position}`\n" \
                 + f"🎧 **Atas permintaan** {message.from_user.mention}",
-        reply_markup = keyboard)
+        reply_markup = keyboard
+        )
         os.remove("final.png")
         return await lel.delete()
     else:
@@ -493,6 +489,7 @@ async def play(_, message: Message):
         photo = "final.png",
         caption = f"🏷 **Judul:** [{title[:60]}]({url})\n⏱ **Durasi:** `{duration}`\n💡 **Status:** `Sedang Memutar`\n" \
                 + f"🎧 **Atas permintaan:** {message.from_user.mention}",
-        reply_markup = keyboard)
+        reply_markup = keyboard
+        )
         os.remove("final.png")
         return await lel.delete()
