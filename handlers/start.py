@@ -40,7 +40,7 @@ Ketik » /help « Untuk Melihat Daftar Perintah!
     )
 
 @Client.on_message(
-    filters.command(["start", "start@tofikdnbot"])
+    filters.command(["start", "start@{BOT_USERNAME}"])
     & filters.group
     & ~ filters.edited
 )
@@ -84,16 +84,3 @@ async def help(client: Client, message: Message):
 /userbotjoin - Untuk Mengundang asisten ke obrolan Anda
 /reload - Untuk Merefresh admin list
  </b>""",
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(
-                        "Owner", url="https://t.me/tofik_dn"
-                    ),
-                    InlineKeyboardButton(
-                        "Tede", url="https://t.me/tdtapibot"
-                    )
-                ]
-            ]
-        )
-    )
