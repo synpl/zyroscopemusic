@@ -1,4 +1,4 @@
-from .ping import get_uptime as tedeuptime
+from .ping import *
 from config import BOT_USERNAME, BOT_NAME, ASSISTANT_NAME
 from helpers.filters import command
 from pyrogram import Client, filters
@@ -7,7 +7,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 @Client.on_message(command("start") & filters.private & ~filters.edited)
 async def start_(client: Client, message: Message):
     await message.reply_text(
-        f"""<b>┗┓ Hi {message.from_user.first_name} My Name is {BOT_NAME} ┏┛\n
+        f"""<b>┗┓ Hi {message.from_user.first_name} My Name is [{BOT_NAME}](https://t.me/{BOT_USERNAME}) ┏┛\n
 Saya Bot Music Group, Yang dapat Memutar Lagu di Voice Chat Group Dengan cara yang Mudah
 Saya Memiliki Banyak Fitur Praktis Seperti:
 ┏━━━━━━━━━━━━━━
@@ -32,13 +32,13 @@ Ketik » /help « Untuk Melihat Daftar Perintah!
                 ]
             ]
         ),
-     disable_web_page_preview=True
+     disable_web_page_preview=False
     )
 
 @Client.on_message(command(["start", "start@{BOT_USERNAME}"]) & filters.group & ~filters.edited)
 async def start(client: Client, message: Message):
     await message.reply_text(
-        f"""I'm online!\n<b>Up since:</b> {tedeuptime}""",
+        f"""I'm online!\n<b>Up since:</b> {uptime}""",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
