@@ -10,6 +10,7 @@ import traceback
 import converter
 import youtube_dl
 from os import path
+from Python_ARQ import ARQ
 from asyncio.queues import QueueEmpty
 from pyrogram import Client, filters, emoji
 from typing import Callable, Coroutine, Dict, List, Tuple, Union
@@ -32,6 +33,9 @@ from cache.admins import admins as a
 from PIL import Image, ImageFont, ImageDraw
 chat_id = None
 
+ARQ_API_KEY = "YPHODY-ZLSHSE-UBBIQA-YFLDKM-ARQ"
+aiohttpsession = aiohttp.ClientSession()
+arq = ARQ("https://thearq.tech", ARQ_API_KEY, aiohttpsession)
 
 def cb_admin_check(func: Callable) -> Callable:
     async def decorator(client, cb):
