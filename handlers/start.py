@@ -67,7 +67,7 @@ async def start(client: Client, message: Message):
     uptime_sec = (current_time - START_TIME).total_seconds()
     uptime = await _human_time_duration(int(uptime_sec))
     await message.reply_text(
-        f"""I'm online!\n<b>Up since:</b> {uptime}""",
+        f"""I'm online!\n<b>Up since:</b> `{uptime}`""",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
