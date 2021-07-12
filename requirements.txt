@@ -1,6 +1,6 @@
 pyrogram
 TgCrypto
-pytgcalls
+py-tgcalls
 python-dotenv
 youtube_dl
 youtube_search_python
@@ -19,4 +19,3 @@ wget
 regex
 html2text
 wheel
-py-tgcalls
