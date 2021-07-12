@@ -1,4 +1,4 @@
-from .ping import uptime as tedeuptime
+from .ping import get_uptime as tedeuptime
 from config import BOT_USERNAME, BOT_NAME, ASSISTANT_NAME
 from helpers.filters import command
 from pyrogram import Client, filters
