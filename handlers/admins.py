@@ -1,14 +1,13 @@
-from asyncio.queues import QueueEmpty
-from cache.admins import set
-from pyrogram import Client
-from pyrogram.types import Message
-from callsmusic import callsmusic
-import traceback
 import os
 import sys
+import traceback
+from asyncio.queues import QueueEmpty
+from cache.admins import set
+from pyrogram import Client, filters, emoji
+from pyrogram.types import Message
+from callsmusic import callsmusic
 from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
 from pyrogram.errors.exceptions.flood_420 import FloodWait
-from pyrogram import filters, emoji
 from config import BOT_NAME as BN
 from helpers.filters import command, other_filters
 from helpers.decorators import errors, authorized_users_only
@@ -39,7 +38,7 @@ async def pause(_, message: Message):
         await message.reply_text("❗ **Tidak ada Lagu yang sedang diputar!**")
     else:
         callsmusic.pytgcalls.pause_stream(message.chat.id)
-        await message.reply_text("▶️ **Paused!**")
+        await message.reply_text("▶️ **Music Paused!**")
 
 
 @Client.on_message(command("resume") & other_filters)
@@ -54,7 +53,7 @@ async def resume(_, message: Message):
         await message.reply_text("❗ **Tidak ada Lagu yang sedang dijeda!**")
     else:
         callsmusic.pytgcalls.resume_stream(message.chat.id)
-        await message.reply_text("⏸ **Resumed!**")
+        await message.reply_text("⏸ **Music Resumed!**")
 
 
 @Client.on_message(command(["end", "stop"]) & other_filters)
