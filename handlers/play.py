@@ -395,7 +395,7 @@ async def play(_, message: Message):
 
                           try:
                               await USER.join_chat(invitelink)
-                              await USER.send_message(message.chat.id,"Saya bergabung dengan group ini untuk memainkan musik di VCG.")
+                              await USER.send_message(message.chat.id, "Saya bergabung dengan group ini untuk memainkan musik di VCG.")
                               await lel.edit(
                                   "<b>{user.first_name} berhasil bergabung dengan Group anda</b>",
                               )
@@ -431,7 +431,7 @@ async def play(_, message: Message):
     ydl_opts = {"format": "bestaudio[ext=m4a]"}
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
-        url = f"https://www.youtube.com{results[0]["url_suffix"]}"
+        url = f"https://www.youtube.com{results[0]['url_suffix']}"
         title = results[0]["title"][:40]       
         thumbnail = results[0]["thumbnails"][0]
         thumb_name = f"thumb{title}.jpg"
