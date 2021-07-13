@@ -40,9 +40,7 @@ async def addchannel(client, message):
     )
 
     
-@Client.on_message(command("userbotleave") & filters.group)
-@authorized_users_only
-@errors
+@USER.on_message(command("userbotleave") & filters.group)
 async def rem(USER, message):
     try:
         await USER.leave_chat(message.chat.id)
