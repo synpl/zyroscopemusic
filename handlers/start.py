@@ -61,7 +61,7 @@ Ketik » /help « Untuk Melihat Daftar Perintah!
     )
 
 
-@Client.on_message(command(["start", "start@{BOT_USERNAME}"]) & filters.group & ~filters.edited)
+@Client.on_message(command(["start", "start@tofikdnbot"]) & filters.group & ~filters.edited)
 async def start(client: Client, message: Message):
     current_time = datetime.utcnow()
     uptime_sec = (current_time - START_TIME).total_seconds()
