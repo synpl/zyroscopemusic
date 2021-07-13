@@ -371,7 +371,7 @@ async def m_cb(b, cb):
 @Client.on_message(command("play") & other_filters)
 async def play(_, message: Message):
     global que
-    lel = await message.reply("🔄 **Sedang Memproses Lagu**")
+    lel = await message.reply("🔎 **Sedang Mencari Lagu**")
     administrators = await get_administrators(message.chat)
     chid = message.chat.id
     try:
@@ -417,7 +417,6 @@ async def play(_, message: Message):
         return     
     sender_id = message.from_user.id
     sender_name = message.from_user.first_name
-    await lel.edit("🔎 **Sedang Mencari Lagu**")
     sender_id = message.from_user.id
     user_id = message.from_user.id
     sender_name = message.from_user.first_name
@@ -428,11 +427,11 @@ async def play(_, message: Message):
     for i in message.command[1:]:
         query += " " + str(i)
     print(query)
-    await lel.edit("🎵 **Sedang Memproses Lagu**")
+    await lel.edit("🔄 **Sedang Memproses Lagu**")
     ydl_opts = {"format": "bestaudio[ext=m4a]"}
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
-        url = f"https://www.youtube.com{results[0]['url_suffix']}"
+        url = f"https://www.youtube.com{results[0]["url_suffix"]}"
         title = results[0]["title"][:40]       
         thumbnail = results[0]["thumbnails"][0]
         thumb_name = f"thumb{title}.jpg"
@@ -447,7 +446,7 @@ async def play(_, message: Message):
         print(str(e))
         return
     try:    
-        secmul, dur, dur_arr = 1, 0, duration.split(':')
+        secmul, dur, dur_arr = 1, 0, duration.split(":")
         for i in range(len(dur_arr)-1, -1, -1):
             dur += (int(dur_arr[i]) * secmul)
             secmul *= 60
