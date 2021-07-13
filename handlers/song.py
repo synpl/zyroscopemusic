@@ -1,3 +1,4 @@
+from __future__ import unicode_literals
 import asyncio
 import math
 import os
@@ -8,7 +9,6 @@ import requests
 import wget
 import youtube_dl
 from random import randint
-from __future__ import unicode_literals
 from urllib.parse import urlparse
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait, MessageNotModified
