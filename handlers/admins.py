@@ -8,7 +8,6 @@ from pyrogram.types import Message
 from callsmusic import callsmusic
 from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
 from pyrogram.errors.exceptions.flood_420 import FloodWait
-from config import BOT_NAME as BN
 from helpers.filters import command, other_filters
 from helpers.decorators import errors, authorized_users_only
 from config import que, admins as a
@@ -38,7 +37,7 @@ async def pause(_, message: Message):
         await message.reply_text("❗ **Tidak ada Lagu yang sedang diputar!**")
     else:
         callsmusic.pytgcalls.pause_stream(message.chat.id)
-        await message.reply_text("▶️ **Music Paused!**")
+        await message.reply_text("⏸ **Music Paused.**")
 
 
 @Client.on_message(command("resume") & other_filters)
@@ -53,7 +52,7 @@ async def resume(_, message: Message):
         await message.reply_text("❗ **Tidak ada Lagu yang sedang dijeda!**")
     else:
         callsmusic.pytgcalls.resume_stream(message.chat.id)
-        await message.reply_text("⏸ **Music Resumed!**")
+        await message.reply_text("▶️ **Music Resumed.**")
 
 
 @Client.on_message(command(["end", "stop"]) & other_filters)
@@ -69,7 +68,7 @@ async def stop(_, message: Message):
             pass
 
         callsmusic.pytgcalls.leave_group_call(message.chat.id)
-        await message.reply_text("❌ **Memberhentikan Lagu!**")
+        await message.reply_text("⏹ **Memberhentikan Lagu.**")
 
 
 @Client.on_message(command("skip") & other_filters)
@@ -78,7 +77,7 @@ async def stop(_, message: Message):
 async def skip(_, message: Message):
     global que
     if message.chat.id not in callsmusic.pytgcalls.active_calls:
-        await message.reply_text("❗ **Tidak ada Lagu Selanjutnya untuk dilewati!**")
+        await message.reply_text("❗ **Tidak ada Lagu yang sedang diputar!**")
     else:
         callsmusic.queues.task_done(message.chat.id)
 
@@ -89,7 +88,6 @@ async def skip(_, message: Message):
                 message.chat.id,
                 callsmusic.queues.get(message.chat.id)["file"]
             )
-
     qeue = que.get(message.chat.id)
     if qeue:
         skip = qeue.pop(0)
