@@ -1,18 +1,13 @@
-import os
-import sys
-import traceback
 from asyncio.queues import QueueEmpty
 from cache.admins import set
-from pyrogram import Client, filters, emoji
+from pyrogram import Client, filters
 from pyrogram.types import Message
 from callsmusic import callsmusic
-from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
-from pyrogram.errors.exceptions.flood_420 import FloodWait
 from helpers.filters import command, other_filters
 from helpers.decorators import errors, authorized_users_only
 from config import que, admins as a
 
-@Client.on_message(command("reload") & other_filters)
+@Client.on_message(command(["reload", f"reload@{BOT_USERNAME}"]) & other_filters)
 @errors
 @authorized_users_only
 async def update_admin(client, message):
@@ -25,7 +20,7 @@ async def update_admin(client, message):
     await message.reply_text("✅ Bot **berhasil dimulai ulang!**\n\n• **Daftar admin** telah **diperbarui.**")
 
 
-@Client.on_message(command("pause") & other_filters)
+@Client.on_message(command(["pause", f"pause@{BOT_USERNAME}"]) & other_filters)
 @errors
 @authorized_users_only
 async def pause(_, message: Message):
@@ -40,7 +35,7 @@ async def pause(_, message: Message):
         await message.reply_text("⏸ **Music Paused.**")
 
 
-@Client.on_message(command("resume") & other_filters)
+@Client.on_message(command(["resume", f"resume@{BOT_USERNAME}"]) & other_filters)
 @errors
 @authorized_users_only
 async def resume(_, message: Message):
@@ -55,7 +50,7 @@ async def resume(_, message: Message):
         await message.reply_text("▶️ **Music Resumed.**")
 
 
-@Client.on_message(command(["end", "stop"]) & other_filters)
+@Client.on_message(command(["end", f"end@{BOT_USERNAME}"]) & other_filters)
 @errors
 @authorized_users_only
 async def stop(_, message: Message):
@@ -71,7 +66,7 @@ async def stop(_, message: Message):
         await message.reply_text("⏹ **Memberhentikan Lagu.**")
 
 
-@Client.on_message(command("skip") & other_filters)
+@Client.on_message(command(["skip", f"skip@{BOT_USERNAME}"]) & other_filters)
 @errors
 @authorized_users_only
 async def skip(_, message: Message):
