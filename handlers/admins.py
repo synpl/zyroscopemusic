@@ -5,7 +5,7 @@ from pyrogram.types import Message
 from callsmusic import callsmusic
 from helpers.filters import command, other_filters
 from helpers.decorators import errors, authorized_users_only
-from config import que, admins as a
+from config import BOT_USERNAME, que, admins as a
 
 @Client.on_message(command(["reload", f"reload@{BOT_USERNAME}"]) & other_filters)
 @errors
