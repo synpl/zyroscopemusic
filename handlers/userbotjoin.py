@@ -1,11 +1,14 @@
+import asyncio
 from callsmusic.callsmusic import client as USER
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram.errors import UserAlreadyParticipant
 from helpers.decorators import errors, authorized_users_only
 from helpers.filters import command
+from config import SUDO_USERS, BOT_USERNAME
 
-@Client.on_message(command("userbotjoin") & filters.group)
+
+@Client.on_message(command(["userbotjoin", f"userbotjoin@{BOT_USERNAME}"]) & filters.group)
 @authorized_users_only
 @errors
 async def addchannel(client, message):
@@ -50,3 +53,21 @@ async def rem(USER, message):
             "\n\nAtau keluarkan saya secara manual dari ke Group Anda</b>",
         )
         return
+
+
+@Client.on_message(command("userbotleaveall"))
+async def bye(client, message):
+    if message.from_user.id in SUDO_USERS:
+        left=0
+        failed=0
+        lol = await message.reply("Assistant Leaving all chats")
+        async for dialog in USER.iter_dialogs():
+            try:
+                await USER.leave_chat(dialog.chat.id)
+                left = left+1
+                await lol.edit(f"Assistant leaving... Left: {left} chats. Failed: {failed} chats.")
+            except:
+                failed=failed+1
+                await lol.edit(f"Assistant leaving... Left: {left} chats. Failed: {failed} chats.")
+            await asyncio.sleep(0.7)
+        await client.send_message(message.chat.id, f"Left {left} chats. Failed {failed} chats.")
