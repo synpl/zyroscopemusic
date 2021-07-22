@@ -20,7 +20,7 @@ from config import DURATION_LIMIT, BOT_USERNAME
 from handlers.play import arq
 
 
-@Client.on_message(command("song") & ~filters.channel)
+@Client.on_message(command(["song", f"song@{BOT_USERNAME}"]) & ~filters.channel)
 def song(client, message):
     user_id = message.from_user.id
     user_name = message.from_user.first_name
@@ -226,7 +226,7 @@ def time_to_seconds(time):
     return sum(int(x) * 60 ** i for i, x in enumerate(reversed(stringt.split(":"))))
 
 
-@Client.on_message(command("saavn") & ~filters.edited)
+@Client.on_message(command(["saavn", f"saavn@{BOT_USERNAME}"]) & ~filters.edited)
 async def jssong(_, message):
     global is_downloading
     if len(message.command) < 2:
@@ -262,7 +262,7 @@ async def jssong(_, message):
     is_downloading = False
 
 
-@Client.on_message(command("deezer") & ~filters.edited)
+@Client.on_message(command(["deezer", f"deezer@{BOT_USERNAME}"]) & ~filters.edited)
 async def deezsong(_, message):
     global is_downloading
     if len(message.command) < 2:
@@ -298,7 +298,7 @@ async def deezsong(_, message):
     is_downloading = False
 
 
-@Client.on_message(command(["vsong", "video"]))
+@Client.on_message(command(["video", f"video@{BOT_USERNAME}"])
 async def ytmusic(client, message: Message):
     global is_downloading
     if is_downloading:
