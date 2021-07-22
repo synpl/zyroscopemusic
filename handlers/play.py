@@ -1,34 +1,24 @@
 import os
-import sys
-import json
-import wget
 import ffmpeg
 import aiohttp
 import aiofiles
 import requests
-import traceback
 import converter
-import youtube_dl
-from os import path
 from Python_ARQ import ARQ
 from asyncio.queues import QueueEmpty
-from pyrogram import Client, filters, emoji
-from typing import Callable, Coroutine, Dict, List, Tuple, Union
+from pyrogram import Client, filters
+from typing import Callable
 from callsmusic import callsmusic, queues
 from helpers.admins import get_administrators
 from youtube_search import YoutubeSearch
-from pyrogram.errors.exceptions.bad_request_400 import ChatAdminRequired
-from pyrogram.errors.exceptions.flood_420 import FloodWait
 from callsmusic.callsmusic import client as USER
 from pyrogram.errors import UserAlreadyParticipant
 from downloaders import youtube
 
-from config import que, DURATION_LIMIT, BOT_NAME as bn
+from config import que, DURATION_LIMIT, BOT_USERNAME
 from helpers.filters import command, other_filters
-from helpers.decorators import errors, authorized_users_only
-from helpers.errors import DurationLimitError
-from helpers.gets import get_url, get_file_name
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, Message, Voice
+from helpers.decorators import authorized_users_only
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from cache.admins import admins as a
 from PIL import Image, ImageFont, ImageDraw
 chat_id = None
@@ -36,6 +26,7 @@ chat_id = None
 ARQ_API_KEY = "YPHODY-ZLSHSE-UBBIQA-YFLDKM-ARQ"
 aiohttpsession = aiohttp.ClientSession()
 arq = ARQ("https://thearq.tech", ARQ_API_KEY, aiohttpsession)
+
 
 def cb_admin_check(func: Callable) -> Callable:
     async def decorator(client, cb):
@@ -76,6 +67,7 @@ def changeImageSize(maxWidth, maxHeight, image):
     newImage = image.resize((newWidth, newHeight))
     return newImage
 
+
 async def generate_cover(requested_by, title, views, duration, thumbnail):
     async with aiohttp.ClientSession() as session:
         async with session.get(thumbnail) as resp:
@@ -83,7 +75,6 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
                 f = await aiofiles.open("background.png", mode="wb")
                 await f.write(await resp.read())
                 await f.close()
-
     image1 = Image.open("./background.png")
     image2 = Image.open("etc/foreground.png")
     image3 = changeImageSize(1280, 720, image1)
@@ -109,7 +100,7 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
     os.remove("background.png")
 
 
-@Client.on_message(command("playlist") & filters.group & ~filters.edited)
+@Client.on_message(command(["playlist", f"playlist@{BOT_USERNAME}"]) & filters.group & ~filters.edited)
 async def playlist(client, message):
     global que
     queue = que.get(message.chat.id)
@@ -171,7 +162,8 @@ def r_ply(type_):
     )
     return mar
 
-@Client.on_message(command("current") & filters.group & ~filters.edited)
+
+@Client.on_message(command(["current", f"current@{BOT_USERNAME}"]) & filters.group & ~filters.edited)
 async def ee(client, message):
     queue = que.get(message.chat.id)
     stats = updated_stats(message.chat, queue)
@@ -179,8 +171,9 @@ async def ee(client, message):
         await message.reply(stats)              
     else:
         await message.reply("**Silahkan Nyalakan dulu VCG nya!**")
-        
-@Client.on_message(command("player") & filters.group & ~filters.edited)
+
+
+@Client.on_message(command(["player", f"player@{BOT_USERNAME}"]) & filters.group & ~filters.edited)
 @authorized_users_only
 async def settings(client, message):
     playing = None
@@ -196,6 +189,7 @@ async def settings(client, message):
             await message.reply(stats, reply_markup=r_ply("play"))
     else:
         await message.reply("**Silahkan Nyalakan dulu VCG nya!**")
+
 
 @Client.on_callback_query(filters.regex(pattern=r"^(playlist)$"))
 async def p_cb(b, cb):
@@ -227,6 +221,7 @@ async def p_cb(b, cb):
                  msg += f"\n• {name}"
                  msg += f"\n• Atas permintaan {usr}\n"
         await cb.message.edit(msg)      
+
 
 @Client.on_callback_query(filters.regex(pattern=r"^(play|pause|skip|leave|puse|resume|menu|cls)$"))
 @cb_admin_check
@@ -368,7 +363,7 @@ async def m_cb(b, cb):
         else:
             await cb.answer("Assistant Sedang Tidak Terhubung dengan VCG!", show_alert=True)
 
-@Client.on_message(command("play") & other_filters)
+@Client.on_message(command(["play", f"play@{BOT_USERNAME}"]) & other_filters)
 async def play(_, message: Message):
     global que
     lel = await message.reply("🔎 **Sedang Mencari Lagu**")
