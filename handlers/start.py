@@ -61,7 +61,7 @@ Ketik » /help « Untuk Melihat Daftar Perintah!
     )
 
 
-@Client.on_message(command(["start", "start@tofikdnbot"]) & filters.group & ~filters.edited)
+@Client.on_message(command(["start", f"start@{BOT_USERNAME}"]) & filters.group & ~filters.edited)
 async def start(client: Client, message: Message):
     current_time = datetime.utcnow()
     uptime_sec = (current_time - START_TIME).total_seconds()
@@ -117,7 +117,7 @@ async def help(client: Client, message: Message):
     )
 
 
-@Client.on_message(command("ping") & ~filters.edited)
+@Client.on_message(command(["ping", f"ping@{BOT_USERNAME}"]) & ~filters.edited)
 async def ping_pong(client: Client, m: Message):
     start = time()
     m_reply = await m.reply_text("Pinging...")
@@ -128,7 +128,7 @@ async def ping_pong(client: Client, m: Message):
     )
 
 
-@Client.on_message(command("uptime") & ~filters.edited)
+@Client.on_message(command(["uptime", f"uptime@{BOT_USERNAME}"]) & ~filters.edited)
 @authorized_users_only
 async def get_uptime(client: Client, m: Message):
     current_time = datetime.utcnow()
