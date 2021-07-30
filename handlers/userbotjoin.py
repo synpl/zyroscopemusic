@@ -55,7 +55,7 @@ async def rem(USER, message):
         return
 
 
-@Client.on_message(command("userbotleaveall") & filters.user(SUDO_USERS) & ~filters.edited)
+@Client.on_message(command("userbotleaveall") & ~filters.edited)
 async def bye(client, message):
     if message.from_user.id in SUDO_USERS:
         left=0
