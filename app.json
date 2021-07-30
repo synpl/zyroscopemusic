@@ -20,7 +20,7 @@
         },
         "BOT_NAME": {
             "description": "Nama Bot MusicPlayer Anda.",
-            "required": false,
+            "required": true,
             "value": ""
         },
         "ASSISTANT_NAME": {
@@ -28,9 +28,9 @@
             "required": true
         },    
         "BG_IMAGE": {
-        "description": "Custom Background Play Musik Gunakan Foto yang Transparant format .png / .jpg",
-        "required": false,
-        "value": " https://telegra.ph/file/f9c4f6fe3ee7dbef047f7.png"
+            "description": "Custom Background Play Musik Gunakan Foto yang Transparant format .png / .jpg",
+            "required": false,
+            "value": " https://telegra.ph/file/f9c4f6fe3ee7dbef047f7.png"
         },
         "API_ID": {
             "description": "Masukan APP ID Silahkan Ambil dari my.telegram.org/apps",
@@ -46,7 +46,7 @@
         },
         "DURATION_LIMIT": {
             "description": "Batas durasi audio maksimal untuk download (minutes)",
-            "required": true,
+            "required": false,
             "value": "60"
         }
     },
