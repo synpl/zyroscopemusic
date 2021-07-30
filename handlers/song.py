@@ -300,7 +300,7 @@ async def deezsong(_, message):
     is_downloading = False
 
 
-@Client.on_message(command(["video", f"video@{BOT_USERNAME}"])
+@Client.on_message(command(["video", f"video@{BOT_USERNAME}"]))
 async def ytmusic(client, message: Message):
     global is_downloading
     if is_downloading:
