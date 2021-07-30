@@ -12,9 +12,9 @@ START_TIME_ISO = START_TIME.replace(microsecond=0).isoformat()
 TIME_DURATION_UNITS = (
     ('week', 60 * 60 * 24 * 7),
     ('day', 60 * 60 * 24),
-    ('h', 60 * 60),
-    ('m', 60),
-    ('s', 1)
+    ('hour', 60 * 60),
+    ('min', 60),
+    ('sec', 1)
 )
 
 async def _human_time_duration(seconds):
@@ -26,7 +26,7 @@ async def _human_time_duration(seconds):
         if amount > 0:
             parts.append('{} {}{}'
                          .format(amount, unit, "" if amount == 1 else "s"))
-    return ':'.join(parts)
+    return ', '.join(parts)
 
 
 @Client.on_message(command("start") & filters.private & ~filters.edited)
