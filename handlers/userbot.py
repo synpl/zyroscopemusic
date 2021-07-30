@@ -19,8 +19,8 @@ from pyrogram import filters
 from pyrogram.types import Message
 
 from handlers.play import arq
-from config import SUDO_USERS
 from helpers.misc import exec_time
+from helpers.filters import sudo_only
 from callsmusic.callsmusic import client as tede
 # Eval and Sh module from nana-remix
 
@@ -46,7 +46,7 @@ async def edit_or_reply(msg: Message, **kwargs):
 
 
 @tede.on_message(
-    filters.user(SUDO_USERS)
+    sudo_only
     & ~filters.forwarded
     & ~filters.via_bot
     & ~filters.edited
@@ -101,7 +101,7 @@ async def executor(client, message: Message):
 
 
 @tede.on_message(
-    filters.user(SUDO_USERS)
+    sudo_only
     & ~filters.forwarded
     & ~filters.via_bot
     & ~filters.edited
@@ -197,7 +197,7 @@ async def sendFile(message: Message, text: str):
     filters.command(["c", "cpp"], prefixes=".")
     & ~filters.edited
     & ~filters.via_bot
-    & filters.user(SUDO_USERS)
+    & sudo_only
 )
 async def c_cpp_eval(_, message: Message):
     if len(message.command) < 2:
