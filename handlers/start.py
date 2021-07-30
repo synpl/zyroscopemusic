@@ -1,8 +1,8 @@
 from time import time
 from datetime import datetime
 from config import BOT_USERNAME, BOT_NAME, ASSISTANT_NAME
-from helpers.filters import command
-from pyrogram import Client, filters, emoji
+from helpers.filters import command, sudo_only
+from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from helpers.decorators import authorized_users_only
 
@@ -12,9 +12,9 @@ START_TIME_ISO = START_TIME.replace(microsecond=0).isoformat()
 TIME_DURATION_UNITS = (
     ('week', 60 * 60 * 24 * 7),
     ('day', 60 * 60 * 24),
-    ('hour', 60 * 60),
-    ('min', 60),
-    ('sec', 1)
+    ('h', 60 * 60),
+    ('m', 60),
+    ('s', 1)
 )
 
 async def _human_time_duration(seconds):
@@ -26,7 +26,7 @@ async def _human_time_duration(seconds):
         if amount > 0:
             parts.append('{} {}{}'
                          .format(amount, unit, "" if amount == 1 else "s"))
-    return ', '.join(parts)
+    return ':'.join(parts)
 
 
 @Client.on_message(command("start") & filters.private & ~filters.edited)
@@ -86,7 +86,7 @@ async def start(client: Client, message: Message):
 @Client.on_message(command("help") & filters.private & ~filters.edited)
 async def help(client: Client, message: Message):
     await message.reply_text(
-        f"""<b>Hi {message.from_user.first_name}!
+        f"""<b>Hi {message.from_user.mention()}!
 \n/play (judul lagu) - Untuk Memutar lagu yang Anda minta melalui YouTube
 /playlist - Untuk Menampilkan daftar putar Lagu sekarang
 /current - Untuk Menunjukkan  Lagu sekarang yang sedang diputar
@@ -123,19 +123,18 @@ async def ping_pong(client: Client, m: Message):
     m_reply = await m.reply_text("Pinging...")
     delta_ping = time() - start
     await m_reply.edit_text(
-        f"{emoji.PING_PONG} **PONG!!**\n"
+        f"🏓 **PONG!!**\n"
         f"`{delta_ping * 1000:.3f} ms`"
     )
 
 
-@Client.on_message(command(["uptime", f"uptime@{BOT_USERNAME}"]) & ~filters.edited)
-@authorized_users_only
+@Client.on_message(command(["uptime", f"uptime@{BOT_USERNAME}"]) & sudo_only & ~filters.edited)
 async def get_uptime(client: Client, m: Message):
     current_time = datetime.utcnow()
     uptime_sec = (current_time - START_TIME).total_seconds()
     uptime = await _human_time_duration(int(uptime_sec))
     await m.reply_text(
-        f"{emoji.ROBOT}\n"
+        f"🤖\n"
         f"• **Uptime:** `{uptime}`\n"
         f"• **Start Time:** `{START_TIME_ISO}`"
     )
