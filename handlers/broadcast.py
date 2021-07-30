@@ -1,12 +1,12 @@
 import asyncio
-from pyrogram import Client, filters
+from pyrogram import Client
 from pyrogram.types import Dialog, Chat, Message
-from pyrogram.errors import UserAlreadyParticipant
 from config import SUDO_USERS
+from helpers.filters import command
 from callsmusic.callsmusic import client as USER
 
 
-@Client.on_message(filters.command(["broadcast"]))
+@Client.on_message(command("broadcast"))
 async def broadcast(_, message: Message):
     sent=0
     failed=0
@@ -18,9 +18,9 @@ async def broadcast(_, message: Message):
             await wtf.edit("please reply to a message to do broadcast!")
             return
         lmao = message.reply_to_message.text
-        async for dialog in veez.iter_dialogs():
+        async for dialog in USER.iter_dialogs():
             try:
-                await veez.send_message(dialog.chat.id, lmao)
+                await USER.send_message(dialog.chat.id, lmao)
                 sent = sent+1
                 await wtf.edit(f"`global cast...` \n\n**sent to:** `{sent}` chats \n**failed in:** {failed} chats")
                 await asyncio.sleep(3)
