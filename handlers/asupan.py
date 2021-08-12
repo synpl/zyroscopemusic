@@ -27,7 +27,7 @@ async def wibu(client, message):
 
 
 @Client.on_message(command(["chika", f"chika@{BOT_USERNAME}"]))
-async def wibu(client, message):
+async def chika(client, message):
     try:
         resp = requests.get("https://tede-api.herokuapp.com/api/chika").json()
         results = f"{resp['url']}"
