@@ -90,7 +90,8 @@ async def help(client: Client, message: Message):
 \n/play (judul lagu) - Untuk Memutar lagu yang Anda minta melalui YouTube
 /playlist - Untuk Menampilkan daftar putar Lagu sekarang
 /current - Untuk Menunjukkan  Lagu sekarang yang sedang diputar
-/song (judul lagu) - Untuk Mendownload lagu dari YouTube 
+/song (judul lagu) - Untuk Mendownload lagu dari YouTube
+/lyric (judul lagu) - Untuk Mencari lirik lagu
 /search (judul video) - Untuk Mencari Video di YouTube dengan detail
 /video (judul video) - Untuk Mendownload Video di YouTube dengan detail
 \n**Admins Only:**
