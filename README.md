@@ -43,7 +43,9 @@ Get STRING_NAME from here:
 ## Requirements
 
 - FFmpeg
-- Python 3.7+
+- Python 3.8+
+- [NodeJs](https://nodesource.com/)
+- [pyTgcalls](https://github.com/pytgcalls/pytgcalls)
 
 ## Deployment
 
