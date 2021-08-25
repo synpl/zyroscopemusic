@@ -15,7 +15,7 @@ async def lirik(_, message):
             return
         query = message.text.split(None, 1)[1]
         rep = await message.reply_text("🔎 **Sedang Mencari lyrics**")
-        resp = requests.get(f"https://tede-api.herokuapp.com/api/lirik?l={query}").json()
+        resp = requests.get(f"https://api-tede.herokuapp.com/api/lirik?l={query}").json()
         result = f"{resp['data']}"
         await rep.edit(result)
     except Exception:
