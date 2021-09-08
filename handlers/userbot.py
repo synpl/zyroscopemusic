@@ -224,9 +224,7 @@ async def c_cpp_eval(_, message: Message):
     out = pRun.stdout.decode()
     err = f"**RUNTIME ERROR:**\n```{escape(err)}```" if err else None
     out = f"**OUTPUT:**\n```{escape(out)}```" if out else None
-    text = (
-        f"**INPUT:**\n```{escape(code)}```\n\n{err if err else out}"
-    )
+    text = f'**INPUT:**\n```{escape(code)}```\n\n{err or out}'
     if len(text) > 4090:
         return await sendFile(message, text)
     await edit_or_reply(message, text=text)
