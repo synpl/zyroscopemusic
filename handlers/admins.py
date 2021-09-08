@@ -7,15 +7,14 @@ from helpers.filters import command, other_filters
 from helpers.decorators import errors, authorized_users_only
 from config import BOT_USERNAME, que, admins as a
 
+
 @Client.on_message(command(["reload", f"reload@{BOT_USERNAME}"]) & other_filters)
 @errors
 @authorized_users_only
-async def update_admin(client, message):
+async def update_admin(client, message: Message):
     global a
     admins = await client.get_chat_members(message.chat.id, filter="administrators")
-    new_ads = []
-    for u in admins:
-        new_ads.append(u.user.id)
+    new_ads = [u.user.id for u in admins]
     a[message.chat.id] = new_ads
     await message.reply_text("✅ Bot **berhasil dimulai ulang!**\n\n• **Daftar admin** telah **diperbarui.**")
 
