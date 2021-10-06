@@ -11,7 +11,7 @@ from helpers.filters import command
 async def lirik(_, message):
     try:
         if len(message.command) < 2:
-            await message.reply_text("**Nyari apa?**")
+            await message.reply_text("**hah nyari apa?**")
             return
         query = message.text.split(None, 1)[1]
         rep = await message.reply_text("🔎 **Sedang Mencari lyrics**")
