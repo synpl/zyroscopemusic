@@ -33,7 +33,7 @@ def cb_admin_check(func: Callable) -> Callable:
         admemes = a.get(cb.message.chat.id)
         if cb.from_user.id in admemes:
             return await func(client, cb)
-        await cb.answer("Anda tidak diizinkan!", show_alert=True)
+        await cb.answer("bukan lo gblk", show_alert=True)
         return
     return decorator                                                                       
                                           
@@ -147,10 +147,10 @@ def r_ply(type_):
                 InlineKeyboardButton("⏭", "skip")
             ],
             [
-                InlineKeyboardButton("📖 Daftar Putar", "playlist"),
+                InlineKeyboardButton("ᴘʟᴀʏʟɪsᴛ", "playlist"),
             ],
             [       
-                InlineKeyboardButton("🗑 Tutup", "cls")
+                InlineKeyboardButton("ᴛᴜᴛᴜᴘ", "cls")
             ]        
         ]
     )
@@ -181,7 +181,7 @@ async def settings(client, message):
         else:
             await message.reply(stats, reply_markup=r_ply("play"))
     else:
-        await message.reply("**Silahkan Nyalakan dulu VCG nya!**")
+        await message.reply("**Idupin dulu VCG nya bang**")
 
 
 @Client.on_callback_query(filters.regex(pattern=r"^(playlist)$"))
@@ -195,7 +195,7 @@ async def p_cb(b, cb):
     if type_ == "playlist":       
         queue = que.get(cb.message.chat.id)
         if not queue:   
-            await cb.message.edit("**Sedang tidak memutar lagu!**")
+            await cb.message.edit("**Sedang tidak memutar lagu**")
         temp = [t for t in queue]
         now_playing = temp[0][0]
         by = temp[0][1].mention(style="md")
@@ -230,7 +230,7 @@ async def m_cb(b, cb):
                 ) or (
                     callsmusic.pytgcalls.active_calls[chat_id] == "paused"
                 ):
-            await cb.answer("Assistant Sedang Tidak Terhubung dengan VCG!", show_alert=True)
+            await cb.answer("Assistant Sedang Tidak Terhubung dengan VCG", show_alert=True)
         else:
             callsmusic.pytgcalls.pause_stream(chat_id)
 
@@ -243,7 +243,7 @@ async def m_cb(b, cb):
             ) or (
                 callsmusic.pytgcalls.active_calls[chat_id] == "playing"
             ):
-                await cb.answer("Assistant Sedang Tidak Terhubung dengan VCG!", show_alert=True)
+                await cb.answer("Assistant Sedang Tidak Terhubung dengan VCG", show_alert=True)
         else:
             callsmusic.pytgcalls.resume_stream(chat_id)
             await cb.answer("Music Resumed!")
@@ -310,11 +310,11 @@ async def m_cb(b, cb):
 
                 ],
                 [
-                    InlineKeyboardButton("📖 Daftar Putar", "playlist"),
+                    InlineKeyboardButton("ᴘʟᴀʏʟɪsᴛ", "playlist"),
 
                 ],
                 [       
-                    InlineKeyboardButton("🗑 Tutup", "cls")
+                    InlineKeyboardButton("ᴛᴜᴛᴜᴘ", "cls")
                 ]        
             ]
         )
@@ -348,7 +348,7 @@ async def m_cb(b, cb):
                 pass
 
             callsmusic.pytgcalls.leave_group_call(chat_id)
-            await cb.message.edit("❌ **Memberhentikan Lagu!**")
+            await cb.message.edit("✅ **Turun dulu ye bang**")
         else:
             await cb.answer("Assistant Sedang Tidak Terhubung dengan VCG!", show_alert=True)
 
@@ -421,7 +421,7 @@ async def play(client, message: Message):
         views = results[0]["views"]
 
     except Exception as e:
-        await lel.edit("**Lagu tidak ditemukan.** Coba cari dengan judul lagu yang lebih jelas")
+        await lel.edit("**Lagu tidak ditemukan** Coba cari dengan judul lagu yang lebih jelas")
         print(str(e))
         return
     try:    
@@ -439,16 +439,11 @@ async def play(client, message: Message):
     keyboard = InlineKeyboardMarkup(
             [   
                 [
-
-                    InlineKeyboardButton("📖 Daftar Putar", callback_data="playlist"),
-                    InlineKeyboardButton("⏯ Menu", callback_data="menu")
+                 InlineKeyboardButton("ᴄʜᴀɴɴᴇʟ", url=f"https://t.me/zyroupdate"),
+                 InlineKeyboardButton("ᴊᴀᴊᴀɴ", url=f"https://saweria.co/nopalle")
 
                 ],                     
-                [
-                    InlineKeyboardButton("📥 Download", url=f"{durl}"),
-                    InlineKeyboardButton("🗑 Tutup", callback_data="cls")
-
-                ]                             
+                [InlineKeyboardButton("ᴄʟᴏsᴇ", callback_data="cls")],                             
             ]
         )
     requested_by = message.from_user.first_name
@@ -465,8 +460,8 @@ async def play(client, message: Message):
         qeue.append(appendable)
         await message.reply_photo(
         photo = "final.png", 
-        caption = f"🏷 **Judul:** [{title[:60]}]({url})\n⏱ **Durasi:** `{duration}`\n💡 **Status:** `Antrian ke {position}`\n" \
-                + f"🎧 **Atas permintaan** {message.from_user.mention}",
+        caption = f"✧ **Judul:** [{title[:60]}]({url})\n✧ **Durasi:** `{duration}`\n✧ **Status:** `Antrian ke {position}`\n" \
+                + f"✧ **Permintaan:** {message.from_user.mention}",
         reply_markup = keyboard
         )
     else:
@@ -481,8 +476,8 @@ async def play(client, message: Message):
         callsmusic.pytgcalls.join_group_call(message.chat.id, file_path)
         await message.reply_photo(
         photo = "final.png",
-        caption = f"🏷 **Judul:** [{title[:60]}]({url})\n⏱ **Durasi:** `{duration}`\n💡 **Status:** `Sedang Memutar`\n" \
-                + f"🎧 **Atas permintaan:** {message.from_user.mention}",
+        caption = f"✧ **Judul:** [{title[:60]}]({url})\n✧ **Durasi:** `{duration}`\n✧ **Status:** `Sedang Memutar`\n" \
+                + f"✧ **Permintaan:** {message.from_user.mention}",
         reply_markup = keyboard
         )
 
