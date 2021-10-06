@@ -1,9 +1,9 @@
 {
-    "name": "TDMusicBot",
-    "logo": "https://telegra.ph/file/7ffa8d18b9b7f1b51a81e.jpg",
+    "name": "Zyroscope",
+    "logo": "https://telegra.ph/file/5af055e0e9e4a7409b9cd.jpg",
     "description": "Open-Source bot to play songs in your Telegram's Group Voice Chat. Powered by PyTgCalls.",
     "keywords": ["music", "voicechat", "telegram"],
-    "repository": "https://github.com/tofikdn/TDMusicBot",
+    "repository": "https://github.com/synpl/zyroscopemusic",
     "stack": "container",
     "env": {
         "SESSION_NAME": {
@@ -30,7 +30,7 @@
         "BG_IMAGE": {
             "description": "Custom Background Play Musik Gunakan Foto yang Transparant format .png / .jpg",
             "required": false,
-            "value": " https://telegra.ph/file/f9c4f6fe3ee7dbef047f7.png"
+            "value": ""
         },
         "API_ID": {
             "description": "Masukan APP ID Silahkan Ambil dari my.telegram.org/apps",
