@@ -27,7 +27,7 @@ def song(client, message):
     rpk = "[" + user_name + "](tg://user?id=" + str(user_id) + ")"
     query = "".join(" " + str(i) for i in message.command[1:])
     print(query)
-    m = message.reply("🔎 **Sedang Mencari Lagu**")
+    m = message.reply("🔎 **Lagi dicari**")
     ydl_opts = {"format": "bestaudio[ext=m4a]"}
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
@@ -42,10 +42,10 @@ def song(client, message):
         results[0]["url_suffix"]
         results[0]["views"]
     except Exception as e:
-        m.edit("❌ **Lagu Tidak ditemukan.**\n\n**Coba Masukan Judul lagu yang lebih jelas.**")
+        m.edit("❌ **Lagu Tidak ditemukan**\n\n**Coba Masukan Judul lagu yang lebih jelas.**")
         print(str(e))
         return
-    m.edit("📥 **Sedang Mendownload Lagu**")
+    m.edit("📥 **Lagi di Download**")
     try:
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=False)
@@ -248,7 +248,7 @@ async def jssong(_, message):
     is_downloading = True
     text = message.text.split(None, 1)[1]
     query = text.replace(" ", "%20")
-    m = await message.reply_text("🔎 **Sedang Mencari Lagu**")
+    m = await message.reply_text("🔎 **Lagi Dicari**")
     try:
         songs = await arq.saavn(query)
         if not songs.ok:
@@ -284,7 +284,7 @@ async def deezsong(_, message):
     is_downloading = True
     text = message.text.split(None, 1)[1]
     query = text.replace(" ", "%20")
-    m = await message.reply_text("🔎 **Sedang Mencari Lagu**")
+    m = await message.reply_text("🔎 **Lagi Dicari**")
     try:
         songs = await arq.deezer(query, 1)
         if not songs.ok:
